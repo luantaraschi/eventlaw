@@ -13,6 +13,7 @@
 </p>
 
 <p align="center">
+  <a href="https://luantaraschi.github.io/eventlaw/"><strong>Website</strong></a> ·
   <a href="#the-problem">Why</a> ·
   <a href="#a-law-you-can-read">Define</a> ·
   <a href="#verify-a-recorded-trace">Verify</a> ·

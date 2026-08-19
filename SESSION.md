@@ -274,3 +274,23 @@ Luan authorized committing and pushing the approved wordmark milestone directly
 to `origin/main`. The snapshot includes SVG sources, transparent theme-specific
 PNGs, README integration, brand documentation, and package inclusion. Author and
 committer remain Luan; the standing no-commit rule resumes after publication.
+
+### 2026-08-19 — GitHub Pages product site
+
+The Eventlaw site uses a distinct “temporal law laboratory” identity rather than
+Lull's light editorial treatment. Its dark blue-green base, violet-to-teal brand
+signal, diagnostic typography, line-based structure, and asymmetric hero are
+specified in `design-system/eventlaw/MASTER.md`.
+
+The static page lives under `site/`. Its Trace Lab bundles the repository's real
+verifier and minimizer, with failing, passing, and pending scenarios. The failing
+trace is reduced from five events to the two that explain the violation. Theme
+preference, keyboard tabs, visible focus, responsive behavior, reduced motion,
+social metadata, and a 1200 × 630 social card are included.
+
+Local validation covers 69 tests, strict TypeScript, the production site bundle,
+Prettier, all three interactive states, both visual themes, 320/375/768/1440 px
+layouts, zero horizontal page overflow, zero browser-console errors, and zero
+axe-core 4.13 violations. The Pages workflow, README link, and package homepage
+are ready for the authorized commit, push, GitHub Pages enablement, and live URL
+verification.

@@ -3,3 +3,6 @@ dist/
 coverage/
 *.log
 *.tgz
+.playwright-cli/
+output/
+site/build/

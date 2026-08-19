@@ -394,3 +394,36 @@ The scope includes the theme-aware SVG sources and PNG exports, README header,
 brand guide, npm asset allowlist, and continuity documentation. No intermediate
 branch or pull request was requested. D-010 resumes immediately after this
 commit and push.
+
+## D-029 — The product site is an executable temporal law laboratory
+
+**Status:** accepted, 2026-08-19.
+
+Lull was used as a product-communication reference, not as a visual template.
+Eventlaw adopts its discipline of a concise thesis, real browser execution, and
+honest limitations, while deliberately avoiding its light paper canvas, serif
+prose, indigo palette, and editorial notebook composition.
+
+Eventlaw instead uses a dark blue-green diagnostic surface with the approved
+violet-to-teal `law` gradient, sans/monospace typography, line-based grouping,
+and an asymmetric hero. The signature element is a Trace Lab that imports the
+actual library core. It demonstrates fail, pass, and pending semantics and calls
+the actual minimizer rather than reproducing expected output as static text.
+
+The page remains framework-free and builds with the repository's existing tsup
+toolchain. This keeps Pages deployment small and ensures the product proof tracks
+source behavior. `design-system/eventlaw/MASTER.md` is the canonical visual and
+interaction specification for later sessions.
+
+## D-030 — Explicit authorization for the GitHub Pages publication
+
+**Status:** accepted for the current publication, 2026-08-19.
+
+Luan requested creation of a GitHub Pages site and linkage of its live URL from
+the repository. That request authorizes the required site commit, direct push to
+`origin/main`, Pages source configuration, repository homepage update, and live
+deployment verification. Author and committer must both remain `Luan Taraschi`.
+
+The authorized scope is the reviewed static site, real Trace Lab bundle entry,
+design system, social assets, README/package links, Pages workflow, validation
+notes, and continuity records. D-010 resumes immediately after publication.

@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#071412" />
+    <meta
+      name="description"
+      content="Write a temporal law once. Run it against generated inputs, recorded traces, and live event streams."
+    />
+    <meta property="og:title" content="eventlaw — executable temporal laws" />
+    <meta
+      property="og:description"
+      content="One serializable definition for generated tests, recorded traces, and live monitoring."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://luantaraschi.github.io/eventlaw/" />
+    <meta property="og:image" content="https://luantaraschi.github.io/eventlaw/social-card.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>eventlaw — executable temporal laws for TypeScript</title>
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
+    <script>
+      ;(() => {
+        const saved = localStorage.getItem('eventlaw-theme')
+        const systemLight = window.matchMedia('(prefers-color-scheme: light)').matches
+        document.documentElement.dataset.theme = saved || (systemLight ? 'light' : 'dark')
+      })()
+    </script>
+    <script type="module" src="./build/demo.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="wordmark" href="#top" aria-label="Eventlaw home">
+          <span>event</span><span>law</span>
+        </a>
+        <nav aria-label="Primary navigation">
+          <a href="#trace-lab">Trace Lab</a>
+          <a href="#modes">How it runs</a>
+          <a href="#boundaries">Status</a>
+        </nav>
+        <div class="header-actions">
+          <a
+            class="github-link"
+            href="https://github.com/luantaraschi/eventlaw"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub <span aria-hidden="true">↗</span>
+          </a>
+          <button class="icon-button" id="theme-toggle" type="button" aria-label="Use light theme">
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="3.5"></circle>
+              <path
+                d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"
+              ></path>
+            </svg>
+            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20 15.2A8.4 8.4 0 0 1 8.8 4a8.5 8.5 0 1 0 11.2 11.2Z"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero section" id="top" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="pulse-dot"></span> Temporal contracts for TypeScript</p>
+          <h1 id="hero-title">
+            Write the rule once.<br /><span>Run it wherever events happen.</span>
+          </h1>
+          <p class="hero-lede">
+            Falsify generated inputs, verify recorded traces, and monitor live streams with the same
+            serializable law.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#trace-lab">Run the Trace Lab</a>
+            <a
+              class="button button-secondary"
+              href="https://github.com/luantaraschi/eventlaw"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Read the source <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <dl class="proof-strip" aria-label="Project facts">
+            <div>
+              <dt>Runtime deps</dt>
+              <dd>0</dd>
+            </div>
+            <div>
+              <dt>Definition</dt>
+              <dd>JSON-safe</dd>
+            </div>
+            <div>
+              <dt>Status</dt>
+              <dd>Research preview</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="law-specimen" aria-label="Example temporal law">
+          <div class="specimen-topline">
+            <span>law / noTurnDuringTakeover</span>
+            <span class="live-label"><i></i> executable</span>
+          </div>
+          <div class="law-clause">
+            <span class="clause-keyword">never</span>
+            <strong>turn.emitted</strong>
+            <span class="clause-keyword">between</span>
+            <strong>takeover.started</strong>
+            <span class="clause-keyword">and</span>
+            <strong>takeover.ended</strong>
+          </div>
+          <div class="specimen-result">
+            <span class="result-mark" aria-hidden="true">×</span>
+            <div>
+              <span>counterexample found</span>
+              <strong>5 events → 2 relevant events</strong>
+            </div>
+          </div>
+          <div class="trace-ruler" aria-hidden="true">
+            <span></span><span></span><span class="hot"></span><span></span><span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="trace-section section" id="trace-lab" aria-labelledby="trace-title">
+        <div class="section-intro">
+          <p class="eyebrow">The proof is executable</p>
+          <h2 id="trace-title">Put a real trace on trial.</h2>
+          <p>
+            This lab imports Eventlaw's verifier directly. Switch scenarios, inspect the events,
+            then run the same core code used by the library.
+          </p>
+        </div>
+
+        <div class="trace-lab">
+          <div class="lab-toolbar">
+            <div class="scenario-tabs" role="tablist" aria-label="Trace scenario">
+              <button type="button" role="tab" aria-selected="true" data-scenario="violation">
+                Violation
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-scenario="passing">
+                Passing
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-scenario="pending">
+                Pending
+              </button>
+            </div>
+            <button class="copy-button" id="copy-law" type="button">Copy law</button>
+          </div>
+
+          <div class="lab-law">
+            <div class="code-label"><span id="law-filename">no-turn-during-takeover.ts</span></div>
+            <pre><code id="law-code"></code></pre>
+          </div>
+
+          <div class="lab-workbench">
+            <section class="event-pane" aria-labelledby="event-pane-title">
+              <div class="pane-heading">
+                <div>
+                  <span class="pane-kicker">Input</span>
+                  <h3 id="event-pane-title">Recorded trace</h3>
+                </div>
+                <span id="event-count">5 events</span>
+              </div>
+              <ol class="event-list" id="event-list"></ol>
+              <button class="button run-button" id="run-law" type="button">
+                <span>Run law</span><span aria-hidden="true">⌘ ↵</span>
+              </button>
+            </section>
+
+            <section class="report-pane" aria-labelledby="report-pane-title">
+              <div class="pane-heading">
+                <div>
+                  <span class="pane-kicker">Output</span>
+                  <h3 id="report-pane-title">Verification report</h3>
+                </div>
+                <span class="status-chip" id="report-status" data-status="idle">Ready</span>
+              </div>
+              <div class="report-empty" id="report-empty">
+                <span aria-hidden="true">⌁</span>
+                <p>Select a scenario and run its law.</p>
+              </div>
+              <pre class="report-output" id="report-output" aria-live="polite" hidden></pre>
+            </section>
+          </div>
+        </div>
+        <p class="lab-note" id="scenario-note">
+          A five-event trace contains one forbidden turn. Eventlaw reduces it to the two events that
+          explain the violation.
+        </p>
+      </section>
+
+      <section class="modes-section section" id="modes" aria-labelledby="modes-title">
+        <div class="section-intro compact">
+          <p class="eyebrow">One definition, three modes</p>
+          <h2 id="modes-title">The law travels. Its meaning does not.</h2>
+        </div>
+        <ol class="mode-rail">
+          <li>
+            <span class="mode-number">01</span>
+            <div>
+              <h3>Generated</h3>
+              <p>Search input spaces and shrink a failure to a readable trace.</p>
+            </div>
+          </li>
+          <li>
+            <span class="mode-number">02</span>
+            <div>
+              <h3>Recorded</h3>
+              <p>Replay JSONL or adapted telemetry against the exact same AST.</p>
+            </div>
+          </li>
+          <li>
+            <span class="mode-number">03</span>
+            <div>
+              <h3>Live</h3>
+              <p>Push events through an incremental monitor with explicit memory bounds.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="portable-section section" id="portable" aria-labelledby="portable-title">
+        <div class="portable-copy">
+          <p class="eyebrow">Portable by construction</p>
+          <h2 id="portable-title">A law is data, not a callback.</h2>
+          <p>
+            Definitions compile to a JSON-safe AST. Save one beside a trace, send it across a worker
+            boundary, or evaluate it in a different process without serializing functions.
+          </p>
+          <ul class="check-list">
+            <li><span aria-hidden="true">✓</span> Explicit correlation and deadlines</li>
+            <li><span aria-hidden="true">✓</span> Pass, fail, and pending trace semantics</li>
+            <li><span aria-hidden="true">✓</span> Human-readable minimal counterexamples</li>
+          </ul>
+        </div>
+        <div class="ast-window" aria-label="Serialized law definition">
+          <div class="code-label"><span>law.ast.json</span><span>JSON-safe</span></div>
+          <pre><code>{
+  <span class="json-key">"kind"</span>: <span class="json-value">"neverBetween"</span>,
+  <span class="json-key">"forbidden"</span>: { <span class="json-key">"type"</span>: <span class="json-value">"turn.emitted"</span> },
+  <span class="json-key">"start"</span>: { <span class="json-key">"type"</span>: <span class="json-value">"takeover.started"</span> },
+  <span class="json-key">"end"</span>: { <span class="json-key">"type"</span>: <span class="json-value">"takeover.ended"</span> },
+  <span class="json-key">"partitionBy"</span>: <span class="json-value">"conversationId"</span>
+}</code></pre>
+        </div>
+      </section>
+
+      <section class="adapters-section section" aria-labelledby="adapters-title">
+        <div>
+          <p class="eyebrow">Bring your traces</p>
+          <h2 id="adapters-title">The core does not own your event bus.</h2>
+        </div>
+        <div class="adapter-list">
+          <a
+            href="https://github.com/luantaraschi/eventlaw/blob/main/docs/adapters.md"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span>JSONL</span><strong>Built in</strong><i aria-hidden="true">↗</i>
+          </a>
+          <a
+            href="https://github.com/luantaraschi/eventlaw/blob/main/docs/adapters.md"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span>OpenTelemetry</span><strong>Built in</strong><i aria-hidden="true">↗</i>
+          </a>
+          <a
+            href="https://github.com/luantaraschi/eventlaw/issues/new?template=adapter_proposal.yml"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <span>Your trace source</span><strong>Propose an adapter</strong
+            ><i aria-hidden="true">↗</i>
+          </a>
+        </div>
+      </section>
+
+      <section class="boundary-section section" id="boundaries" aria-labelledby="boundary-title">
+        <div class="boundary-marker" aria-hidden="true">R/P</div>
+        <div>
+          <p class="eyebrow">Research preview</p>
+          <h2 id="boundary-title">Useful enough to test. Early enough to shape.</h2>
+          <p>
+            Eventlaw is not published to npm yet. The core, adapters, tests, examples, and design
+            notes are open for experiments and design partners. The law language will evolve from
+            real event-system failures, not from invented syntax.
+          </p>
+          <a
+            class="text-link"
+            href="https://github.com/luantaraschi/eventlaw/issues"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Bring a temporal rule we should be able to express <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="final-cta section" aria-labelledby="final-title">
+        <p class="eyebrow">Start with one production rule</p>
+        <h2 id="final-title">What should never happen in your event stream?</h2>
+        <div>
+          <a
+            class="button button-primary"
+            href="https://github.com/luantaraschi/eventlaw"
+            target="_blank"
+            rel="noreferrer"
+            >Explore on GitHub <span aria-hidden="true">↗</span></a
+          >
+          <a
+            class="button button-secondary"
+            href="https://github.com/luantaraschi/eventlaw/issues/new?template=law_proposal.yml"
+            target="_blank"
+            rel="noreferrer"
+            >Propose a law</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <a class="wordmark" href="#top"><span>event</span><span>law</span></a>
+      <p>Executable temporal laws for event-driven TypeScript systems.</p>
+      <p>MIT · Built in the open by <a href="https://github.com/luantaraschi">Luan Taraschi</a></p>
+    </footer>
+  </body>
+</html>
