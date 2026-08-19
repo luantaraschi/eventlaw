@@ -1,7 +1,7 @@
 # eventlaw
 
 [![CI](https://github.com/luantaraschi/eventlaw/actions/workflows/ci.yml/badge.svg)](https://github.com/luantaraschi/eventlaw/actions/workflows/ci.yml)
-[![Node.js 20+](https://img.shields.io/badge/node-%3E%3D20-5c4ee5)](package.json)
+[![Node.js 22+](https://img.shields.io/badge/node-%3E%3D22-5c4ee5)](package.json)
 [![runtime dependencies](https://img.shields.io/badge/runtime_dependencies-none-5c4ee5)](package.json)
 [![license](https://img.shields.io/badge/license-MIT-5c4ee5)](LICENSE)
 [![discussions](https://img.shields.io/badge/discussions-join-5c4ee5)](https://github.com/luantaraschi/eventlaw/discussions)
@@ -168,7 +168,7 @@ scope reset.
 
 ## Try it locally
 
-Node.js 20 or newer is required.
+Node.js 22 or newer is required.
 
 ```bash
 git clone https://github.com/luantaraschi/eventlaw.git
@@ -183,6 +183,7 @@ Three examples exercise different parts of the project:
 npm run example:lull      # real reducer + minimal temporal failure
 npm run example:falsify   # generated commands + two-stage shrinking
 npm run example:webhooks  # bounded delivery deduplication
+npm run bench:progress    # progress-monitor scaling
 ```
 
 ## What it is — and is not
@@ -208,13 +209,14 @@ The current vertical slice includes:
 - differential tests proving online/offline prefix equivalence;
 - optional property-based generation and shrinking.
 
-The full suite has 44 tests across 8 files, including 1,250 generated
+The full suite has 45 tests across 8 files, including 1,250 generated
 differential traces. TypeScript types, ESM, CommonJS, declarations, formatting,
 and the package tarball are checked locally and in CI.
 
 Before a public package release, the API still needs feedback from TypeScript
-developers who operate event-driven systems. Progress deadline expiration also
-needs a benchmark before its current scan is replaced with an index.
+developers who operate event-driven systems. The first performance decision is
+documented in [benchmarks](docs/benchmarks.md), including the quadratic baseline
+that justified the deadline index.
 
 ## Design constraints
 

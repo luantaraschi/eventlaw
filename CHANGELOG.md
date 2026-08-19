@@ -18,10 +18,18 @@ the package leaves research preview.
 - Lifetime, sliding-window, and reset-scoped uniqueness retention.
 - Optional `fast-check` generation and two-stage shrinking.
 - Real `lull` integration plus generated-failure and webhook examples.
+- Reproducible progress-monitor benchmark with recorded baseline.
+
+### Changed
+
+- Replaced repeated progress-obligation scans with a deadline-ordered index.
+- Raised the minimum Node.js version from 20 to 22 after Node 20 reached EOL.
+- Updated GitHub Actions to `checkout@v7` and `setup-node@v7` and CI coverage to
+  Node.js 22 and 24.
 
 ### Known limitations
 
 - The package is private and unpublished while the API is validated externally.
 - Lifetime uniqueness is intentionally unbounded without an explicit retention law.
-- Progress expiration still scans open obligations and needs benchmark evidence
-  before an index is introduced.
+- Consequence matching still examines pending obligations in the event's
+  partition when captures differ.

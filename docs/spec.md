@@ -98,6 +98,11 @@ themselves. `traceLength` is the number of processed events, not retained trace
 storage. A live report must match finite verification for every prefix until a
 failure is first observed; after that, the failing law result is frozen.
 
+Progress obligations are indexed in nondecreasing deadline order and grouped by
+partition for consequence matching. This changes lookup cost, not semantics:
+exact-deadline events are still evaluated before expiration, and completion still
+closes every remaining obligation.
+
 For a pushed event, existing progress obligations see the event before deadlines
 at that timestamp are closed. Therefore, a consequent exactly at its deadline is
 valid. The event then opens any new obligations, and deadlines reached at that

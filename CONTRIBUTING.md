@@ -9,7 +9,7 @@ fixes, and benchmark results are all welcome.
 
 ## Getting set up
 
-Node.js 20 or newer is the only runtime requirement.
+Node.js 22 or newer is the only runtime requirement.
 
 ```bash
 git clone https://github.com/luantaraschi/eventlaw.git
@@ -27,6 +27,7 @@ npm run check
 | `npm run check`            | Runs types, tests, and build                    |
 | `npm run format`           | Formats the repository with Prettier            |
 | `npm run format:check`     | Runs the same formatting check as CI            |
+| `npm run bench:progress`   | Measures insertion with open obligations        |
 | `npm run example:lull`     | Runs the real reducer integration               |
 | `npm run example:falsify`  | Generates and shrinks a failing input           |
 | `npm run example:webhooks` | Demonstrates windowed webhook deduplication     |

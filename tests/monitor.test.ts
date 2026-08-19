@@ -190,6 +190,21 @@ test('does not retain unrelated event history', () => {
   })
 })
 
+test('releases a large set of satisfied progress obligations', () => {
+  const bulkLaws = defineLaws({
+    progresses: after(event('trigger')).eventually(event('done')).within(1_000_000),
+  })
+  const monitor = createMonitor(bulkLaws)
+
+  for (let index = 0; index < 10_000; index += 1) {
+    monitor.push({ type: 'trigger', at: index })
+  }
+  expect(monitor.stats().retainedEntries).toBe(10_000)
+
+  expect(monitor.push({ type: 'done', at: 10_000 }).status).toBe('pass')
+  expect(monitor.stats().retainedEntries).toBe(0)
+})
+
 test('releases retained operator state after a terminal failure', () => {
   const monitor = createMonitor(laws)
   monitor.push({ type: 'message.accepted', id: 'm1', at: 1_000 })

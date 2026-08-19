@@ -10,8 +10,8 @@ small, readable counterexample.
 
 ## Current phase
 
-Vertical slices 1 through 3 are complete. The project is now validating
-performance and API readability with external users.
+Vertical slices 1 through 4 are complete. The project is now validating API
+readability with external users and deciding the first integration adapters.
 
 ## Current status
 
@@ -22,6 +22,8 @@ performance and API readability with external users.
 - Luan explicitly authorized Codex to create and push the initial commit as a
   one-time exception. Git identity is `Luan Taraschi`; the no-commit rule resumes
   immediately after that push.
+- Initial commit `0882d88` is on `origin/main`; its Node 20/22 CI passed. Current
+  work remains unstaged and uncommitted for Luan.
 - Semantic decisions and initial API are documented.
 - Offline verifier implements progress, exclusion, and uniqueness laws.
 - The published `lull` reducer is exercised as the first real integration.
@@ -33,11 +35,15 @@ performance and API readability with external users.
   `.within(d)`, or per-partition `.resetOn(event)`.
 - `monitoringProfile` exposes static memory behavior; `monitor.stats()` exposes
   retained logical entries at runtime.
+- Progress uses per-partition sets plus a deadline-ordered linked index. The
+  benchmark changed from quadratic growth to an approximately linear curve.
 - The optional `fast-check` adapter shrinks both generated input and emitted trace.
-- 44 tests pass across 8 files, including 1,250 generated differential traces;
+- 45 tests pass across 8 files, including 1,250 generated differential traces;
   typecheck, ESM/CJS build, formatting, and audit pass.
 - A runnable webhook example demonstrates bounded delivery deduplication.
-- Package dry-run: 19 files, 47.3 kB compressed, 260.1 kB unpacked. Package
+- Node.js 22 is now the minimum; CI is prepared for Node 22/24 with official v7
+  GitHub Actions.
+- Package dry-run: 20 files, 51.2 kB compressed, 272.2 kB unpacked. Package
   remains private.
 
 ## Validation gates
@@ -50,14 +56,13 @@ performance and API readability with external users.
 
 ## Next actions
 
-1. Benchmark the progress operator's full pending-obligation scan, then replace
-   it with a deadline index only if the result proves it material.
-2. Decide whether lifetime uniqueness needs an external state-store interface or
+1. Put the README example in front of two TypeScript developers.
+2. Validate the webhook example with someone who operates webhook ingestion.
+3. Decide whether lifetime uniqueness needs an external state-store interface or
    belongs in an adapter package.
-3. Put the README example in front of two TypeScript developers.
-4. Validate the webhook example with someone who operates webhook ingestion.
-5. Luan reviews the prepared working tree, creates the initial commit, and pushes
-   it when ready.
+4. Choose the first trace-ingestion adapter from evidence: JSONL, OpenTelemetry,
+   Kafka, or a test-runner reporter.
+5. Luan reviews and commits the prepared performance/CI changes.
 6. Only after external validation, decide whether to make the repository public.
 
 ## Known limitations
@@ -65,8 +70,8 @@ performance and API readability with external users.
 - Exact `atMostOnce` monitoring retains every distinct key for the monitor lifetime.
 - Window retention bounds time, not the number of keys arriving within the window;
   reset retention depends on the reset event eventually arriving.
-- Progress expiration currently scans all open obligations on every clock advance
-  or event; memory is window-bounded, but CPU can grow with the active window.
+- A matching consequence still scans pending obligations in its partition when
+  capture bindings differ; benchmark a real schema before indexing captures.
 - `TraceMonitor.advanceTo` handles silent time, but callers must drive the clock.
 - The deletion minimizer is 1-minimal, not guaranteed globally minimal.
 - Matchers support field equality, array membership, captures, and references only.
@@ -116,3 +121,11 @@ counterexample output, the three execution modes, honest memory classes, local
 trial, boundaries, status, and contribution paths. Community health files,
 issue forms, a pull request template, security policy, and changelog were added
 before the authorized initial commit.
+
+### 2026-08-19 — indexed progress monitoring
+
+A benchmark proved the pending-obligation scan quadratic: 4,000 opens took a
+76.27 ms median. Per-partition sets plus a deadline-ordered linked index reduced
+the reproducible 4,000-open median to about 1 ms and handled 16,000 in under 5 ms
+without changing differential semantics. Node 20 support was also removed after
+EOL; the prepared CI targets maintained Node 22 and 24 lines.

@@ -23,7 +23,7 @@
   "private": true,
   "license": "MIT",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "build": "tsup",
@@ -33,6 +33,7 @@
     "check": "npm run typecheck && npm run test && npm run build",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "bench:progress": "tsx bench/progress.ts",
     "example:lull": "tsx examples/lull.ts",
     "example:falsify": "tsx examples/falsify.ts",
     "example:webhooks": "tsx examples/webhooks.ts"

@@ -135,3 +135,34 @@ author and committer identity must remain `Luan Taraschi`.
 This is a one-time exception to D-010. Immediately after the first push, the
 standing rule resumes: Codex may prepare and verify changes but only Luan creates
 later commits unless he grants another explicit exception.
+
+## D-014 — Index progress deadlines after measuring quadratic growth
+
+**Status:** accepted, 2026-08-19.
+
+The first incremental monitor removed full-trace replay but still scanned every
+open progress obligation on every event. A controlled benchmark measured 7.44 ms
+for 1,000 opens, 18.10 ms for 2,000, and 76.27 ms for 4,000. The 4.2× increase on
+the final doubling justified an index rather than speculative optimization.
+
+Each progress law now keeps a set per partition and a deadline-ordered linked
+index. Event timestamps are nondecreasing and `withinMs` is fixed per law, so new
+deadlines append in order. Satisfaction removes a node in constant time;
+expiration walks only the reached prefix. Events whose type cannot be the
+consequent skip binding checks entirely.
+
+The indexed benchmark processed 16,000 opens in a 4.60 ms median on the recorded
+machine. Differential tests remain the semantic authority; benchmark speed never
+permits changing deadline or evidence rules.
+
+## D-015 — Support maintained Node.js LTS lines
+
+**Status:** accepted, 2026-08-19.
+
+[Node.js 20 reached end-of-life](https://nodejs.org/en/about/eol) on 2026-03-24.
+Before publication, the minimum engine moves to Node.js 22 and CI covers Node.js
+22 and 24. GitHub Actions move to the current
+[`checkout@v7`](https://github.com/actions/checkout/releases/tag/v7.0.1) and
+[`setup-node@v7`](https://github.com/actions/setup-node/releases/tag/v7.0.0)
+releases, removing the deprecated Node 20 action-runtime warning from the initial
+workflow.

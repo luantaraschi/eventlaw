@@ -23,12 +23,18 @@ type PendingObligation = {
   deadline: number
   triggerIndex: number
   partition: unknown
+  partitionKey: string
+  previous: PendingObligation | null
+  next: PendingObligation | null
 }
 
 type EventuallyState = {
   kind: 'eventually'
   triggers: number
-  pending: Map<string, PendingObligation[]>
+  pending: Map<string, Set<PendingObligation>>
+  deadlineHead: PendingObligation | null
+  deadlineTail: PendingObligation | null
+  pendingCount: number
 }
 
 type OpenInterval = {
@@ -198,7 +204,14 @@ export async function* monitorTrace(
 function createState(law: Law): LawState {
   switch (law.kind) {
     case 'eventually':
-      return { kind: 'eventually', triggers: 0, pending: new Map() }
+      return {
+        kind: 'eventually',
+        triggers: 0,
+        pending: new Map(),
+        deadlineHead: null,
+        deadlineTail: null,
+        pendingCount: 0,
+      }
     case 'neverBetween':
       return { kind: 'neverBetween', starts: 0, open: new Map() }
     case 'atMostOnce':
@@ -225,59 +238,53 @@ function pushEventually(
 ): LawViolation[] {
   const violations: LawViolation[] = []
   const partition = partitionOf(event, law.partitionBy)
-  const pending = state.pending.get(partition.key) ?? []
-  const remaining: PendingObligation[] = []
 
-  for (const obligation of pending) {
-    if (matchEvent(event, law.consequent, obligation.bindings) === null) {
-      remaining.push(obligation)
-      continue
-    }
+  if (event.type === law.consequent.type) {
+    const pending = state.pending.get(partition.key)
+    if (pending !== undefined) {
+      for (const obligation of pending) {
+        if (matchEvent(event, law.consequent, obligation.bindings) === null) continue
 
-    if (event.at > obligation.deadline) {
-      violations.push(
-        makeViolation(
-          law,
-          obligation.partition,
-          event.at,
-          [obligation.triggerIndex, index],
-          `consequent ${law.consequent.type} arrived ${event.at - obligation.deadline}ms after its deadline`,
-        ),
-      )
+        if (event.at > obligation.deadline) {
+          violations.push(
+            makeViolation(
+              law,
+              obligation.partition,
+              event.at,
+              [obligation.triggerIndex, index],
+              `consequent ${law.consequent.type} arrived ${event.at - obligation.deadline}ms after its deadline`,
+            ),
+          )
+        }
+        removeObligation(state, obligation)
+      }
     }
   }
 
   const bindings = matchEvent(event, law.trigger)
   if (bindings !== null) {
     state.triggers += 1
-    remaining.push({
+    appendObligation(state, {
       bindings,
       deadline: event.at + law.withinMs,
       triggerIndex: index,
       partition: partition.value,
+      partitionKey: partition.key,
+      previous: null,
+      next: null,
     })
   }
 
-  if (remaining.length === 0) state.pending.delete(partition.key)
-  else state.pending.set(partition.key, remaining)
   return violations
 }
 
 function expireEventually(law: EventuallyLaw, state: EventuallyState, now: number): LawViolation[] {
   const violations: LawViolation[] = []
 
-  for (const [partitionKey, obligations] of state.pending) {
-    const remaining: PendingObligation[] = []
-    for (const obligation of obligations) {
-      if (now < obligation.deadline) {
-        remaining.push(obligation)
-        continue
-      }
-      violations.push(missingConsequence(law, obligation))
-    }
-
-    if (remaining.length === 0) state.pending.delete(partitionKey)
-    else state.pending.set(partitionKey, remaining)
+  while (state.deadlineHead !== null && state.deadlineHead.deadline <= now) {
+    const obligation = state.deadlineHead
+    violations.push(missingConsequence(law, obligation))
+    removeObligation(state, obligation)
   }
 
   return violations
@@ -285,13 +292,43 @@ function expireEventually(law: EventuallyLaw, state: EventuallyState, now: numbe
 
 function closeEventually(law: EventuallyLaw, state: EventuallyState): LawViolation[] {
   const violations: LawViolation[] = []
-  for (const obligations of state.pending.values()) {
-    for (const obligation of obligations) {
-      violations.push(missingConsequence(law, obligation))
-    }
+  while (state.deadlineHead !== null) {
+    const obligation = state.deadlineHead
+    violations.push(missingConsequence(law, obligation))
+    removeObligation(state, obligation)
   }
-  state.pending.clear()
   return violations
+}
+
+function appendObligation(state: EventuallyState, obligation: PendingObligation): void {
+  let partition = state.pending.get(obligation.partitionKey)
+  if (partition === undefined) {
+    partition = new Set()
+    state.pending.set(obligation.partitionKey, partition)
+  }
+  partition.add(obligation)
+
+  obligation.previous = state.deadlineTail
+  if (state.deadlineTail === null) state.deadlineHead = obligation
+  else state.deadlineTail.next = obligation
+  state.deadlineTail = obligation
+  state.pendingCount += 1
+}
+
+function removeObligation(state: EventuallyState, obligation: PendingObligation): void {
+  const partition = state.pending.get(obligation.partitionKey)
+  partition?.delete(obligation)
+  if (partition?.size === 0) state.pending.delete(obligation.partitionKey)
+
+  if (obligation.previous === null) state.deadlineHead = obligation.next
+  else obligation.previous.next = obligation.next
+
+  if (obligation.next === null) state.deadlineTail = obligation.previous
+  else obligation.next.previous = obligation.previous
+
+  obligation.previous = null
+  obligation.next = null
+  state.pendingCount -= 1
 }
 
 function missingConsequence(law: EventuallyLaw, obligation: PendingObligation): LawViolation {
@@ -481,6 +518,9 @@ function releaseState(state: LawState): void {
   switch (state.kind) {
     case 'eventually':
       state.pending.clear()
+      state.deadlineHead = null
+      state.deadlineTail = null
+      state.pendingCount = 0
       return
     case 'neverBetween':
       state.open.clear()
@@ -501,7 +541,7 @@ function runtimeStats(runtime: LawRuntime): MonitorLawStats {
 function retainedEntries(state: LawState): number {
   switch (state.kind) {
     case 'eventually':
-      return [...state.pending.values()].reduce((total, pending) => total + pending.length, 0)
+      return state.pendingCount
     case 'neverBetween':
       return state.open.size
     case 'atMostOnce':
