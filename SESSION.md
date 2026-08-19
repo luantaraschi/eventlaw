@@ -63,10 +63,15 @@ readability with external users and deciding the first integration adapters.
   atomicity, replay, restart, and failure requirements come from an operator.
 - Node.js 22 is now the minimum; CI is prepared for Node 22/24 with official v7
   GitHub Actions.
-- Package dry-run: 32 files, 67.3 kB compressed, 360.2 kB unpacked. Package
+- Package dry-run: 36 files, 110.2 kB compressed, 405.6 kB unpacked. Package
   remains private.
 - The Collector and multi-resource milestone is committed and pushed; the
   working tree is expected to be clean at handoff.
+- A theme-aware SVG README hero and visual-identity guide are drafted after that
+  push. The first diagrammatic direction was rejected; the current draft is a
+  wordmark-only display approved by Luan. The README uses transparent PNG
+  exports and retains SVG sources. The visual milestone is committed and pushed
+  under Luan's explicit authorization.
 
 ## Validation gates
 
@@ -86,8 +91,7 @@ readability with external users and deciding the first integration adapters.
    the deterministic two-service harness is complete.
 5. Ask whether truncating nanoseconds, nesting semantic attribute keys, and
    matching on trace IDs fit how an operator would write laws.
-6. Verify the latest GitHub Actions run after the direct `main` push.
-7. Only after external validation, decide whether to make the repository public.
+6. Only after external validation, decide whether to make the repository public.
 
 ## Known limitations
 
@@ -244,3 +248,29 @@ normalization equivalence, cross-resource trace correlation, trace-flag
 preservation, fixtures, tests, and documentation. The direct push intentionally
 publishes the five post-bootstrap milestones without an intermediate PR. D-010
 resumes after this one-time exception.
+
+### 2026-08-19 — README visual direction
+
+The user references ranged from a large expressive wordmark to restrained marks
+and a product logo with a single promise. The first `eventlaw` direction used a
+law executing on a trace, but Luan clarified that the hero should only display
+the project name. It was replaced by a centered lowercase wordmark with `law` as
+the single color gesture. Light and dark SVG variants, factual badges, concise
+navigation, and a brand guide form the revised draft.
+
+The image-generation workflow was evaluated, but deterministic repository-native
+SVG was selected because the asset is a logo-like interface graphic with exact
+text. The result has no remote font, script, animation, or raster dependency.
+All visual work remains unstaged and uncommitted for Luan's review.
+
+Luan then approved the wordmark and requested PNG-like transparency. Exact PNG
+exports were rendered from both SVG sources at 1280 × 280 with four channels and
+verified alpha. The README now selects them by theme, and `assets` is included in
+the future npm package so relative images remain available.
+
+### 2026-08-19 — Visual identity publication
+
+Luan authorized committing and pushing the approved wordmark milestone directly
+to `origin/main`. The snapshot includes SVG sources, transparent theme-specific
+PNGs, README integration, brand documentation, and package inclusion. Author and
+committer remain Luan; the standing no-commit rule resumes after publication.

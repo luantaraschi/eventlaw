@@ -361,3 +361,36 @@ intermediate pull request was requested.
 This exception covers exactly the reviewed working tree and its direct push,
 including both previously captured Collector fixtures, trace-flag preservation,
 regression tests, and documentation. D-010 resumes immediately afterward.
+
+## D-027 — The README hero is a wordmark only
+
+**Status:** accepted, 2026-08-19.
+
+The first diagrammatic direction was rejected because the hero should display
+the project name rather than explain the product. The revised SVG contains only
+`eventlaw`, centered with generous negative space. `event` uses the theme's ink;
+`law` carries a restrained violet-to-teal gradient as the sole visual gesture.
+
+Theme-specific SVGs share transparent geometry and use no external fonts,
+scripts, or bitmap text. Product explanation remains searchable README prose.
+The top keeps five factual badges and avoids adoption signals that do not yet
+have public evidence.
+
+Luan approved the revised wordmark and requested transparent PNG delivery. The
+README uses theme-specific PNG exports with verified alpha channels, while SVGs
+remain the editable sources. Its type treatment and `law` gradient can now form
+the basis for a repository avatar and social-preview image.
+
+## D-028 — Explicit authorization for the visual identity commit and push
+
+**Status:** accepted and consumed, 2026-08-19.
+
+After approving the name-only wordmark and its transparent PNG exports, Luan
+asked for the result to be pushed to the repository. This explicitly authorizes
+one commit containing the reviewed visual-identity working tree and a direct
+push to `origin/main`, using `Luan Taraschi` as both author and committer.
+
+The scope includes the theme-aware SVG sources and PNG exports, README header,
+brand guide, npm asset allowlist, and continuity documentation. No intermediate
+branch or pull request was requested. D-010 resumes immediately after this
+commit and push.

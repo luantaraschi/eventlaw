@@ -10,6 +10,7 @@ the package leaves research preview.
 
 ### Added
 
+- Theme-aware README wordmark and documented visual identity.
 - Serializable event matchers with constraints, captures, and references.
 - Progress, exclusion, and uniqueness laws with partitioned verification.
 - Three-valued reports, vacuity warnings, and deterministic time semantics.

@@ -1,13 +1,24 @@
-# eventlaw
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="./assets/eventlaw-wordmark-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="./assets/eventlaw-wordmark-light.png">
+  <img alt="eventlaw" src="./assets/eventlaw-wordmark-light.png" width="100%">
+</picture>
 
-[![CI](https://github.com/luantaraschi/eventlaw/actions/workflows/ci.yml/badge.svg)](https://github.com/luantaraschi/eventlaw/actions/workflows/ci.yml)
-[![Node.js 22+](https://img.shields.io/badge/node-%3E%3D22-5c4ee5)](package.json)
-[![runtime dependencies](https://img.shields.io/badge/runtime_dependencies-none-5c4ee5)](package.json)
-[![license](https://img.shields.io/badge/license-MIT-5c4ee5)](LICENSE)
-[![discussions](https://img.shields.io/badge/discussions-join-5c4ee5)](https://github.com/luantaraschi/eventlaw/discussions)
-[![status](https://img.shields.io/badge/status-research_preview-d97706)](#project-status)
+<p align="center">
+  <a href="https://github.com/luantaraschi/eventlaw/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/luantaraschi/eventlaw/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="./package.json"><img alt="Node.js 22 or newer" src="https://img.shields.io/badge/node-%3E%3D22-5847e8"></a>
+  <a href="./package.json"><img alt="Zero runtime dependencies" src="https://img.shields.io/badge/runtime_dependencies-none-5847e8"></a>
+  <a href="./LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-5847e8"></a>
+  <a href="#project-status"><img alt="Research preview" src="https://img.shields.io/badge/status-research_preview-e79519"></a>
+</p>
 
-**Executable temporal laws for event-driven TypeScript systems.**
+<p align="center">
+  <a href="#the-problem">Why</a> ·
+  <a href="#a-law-you-can-read">Define</a> ·
+  <a href="#verify-a-recorded-trace">Verify</a> ·
+  <a href="#monitor-live-events">Monitor</a> ·
+  <a href="#contributing">Contribute</a>
+</p>
 
 Write a behavior law once. Falsify it with generated inputs, verify recorded
 traces, and monitor live events with the same serializable definition.
