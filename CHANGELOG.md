@@ -19,6 +19,10 @@ the package leaves research preview.
 - Optional `fast-check` generation and two-stage shrinking.
 - Real `lull` integration plus generated-failure and webhook examples.
 - Reproducible progress-monitor benchmark with recorded baseline.
+- Experimental `eventlaw/jsonl` adapter for in-memory and streaming JSON Lines
+  traces with source/line diagnostics.
+- External API and webhook validation protocol plus an evidence-based adapter
+  comparison.
 
 ### Changed
 

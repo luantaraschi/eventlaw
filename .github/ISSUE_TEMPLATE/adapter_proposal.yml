@@ -1,0 +1,65 @@
+name: Adapter proposal
+description: Evidence for translating a real event source into TraceEvent
+labels: ['adapter']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Start with a sanitized source record and its operational semantics. An adapter is more than renaming fields: it must preserve ordering, time, replay, and failure behavior.
+
+  - type: input
+    id: source
+    attributes:
+      label: Event source
+      description: For example OpenTelemetry logs, a Kafka client, or a test runner and version.
+    validations:
+      required: true
+
+  - type: textarea
+    id: record
+    attributes:
+      label: Smallest sanitized source record
+      render: json
+    validations:
+      required: true
+
+  - type: textarea
+    id: mapping
+    attributes:
+      label: Expected TraceEvent
+      description: Explain which source values become type, at, partitions, and attributes.
+      render: json
+    validations:
+      required: true
+
+  - type: textarea
+    id: ordering
+    attributes:
+      label: Ordering and replay
+      description: What is ordered, what can arrive late or twice, and how are offsets or source identities handled?
+    validations:
+      required: true
+
+  - type: textarea
+    id: clock
+    attributes:
+      label: Timestamp semantics
+      description: Which timestamp is authoritative, what is its unit, and can it be missing?
+    validations:
+      required: true
+
+  - type: textarea
+    id: operations
+    attributes:
+      label: Runtime and failure behavior
+      description: Required SDKs, connection lifecycle, backpressure, retries, and behavior when the source is unavailable.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proof
+    attributes:
+      label: Law this adapter would unlock
+      description: Include one real rule and the smallest passing or failing trace it enables.
+    validations:
+      required: true

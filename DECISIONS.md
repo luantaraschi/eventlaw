@@ -166,3 +166,54 @@ Before publication, the minimum engine moves to Node.js 22 and CI covers Node.js
 [`setup-node@v7`](https://github.com/actions/setup-node/releases/tag/v7.0.0)
 releases, removing the deprecated Node 20 action-runtime warning from the initial
 workflow.
+
+## D-016 — JSON Lines is the first trace-ingestion adapter
+
+**Status:** accepted experimentally, 2026-08-19.
+
+The first adapter must validate a distinct execution mode without pulling a
+vendor SDK into the dependency-free core. JSON Lines directly exercises recorded
+trace verification, can be produced by logs and shell pipelines, and can be read
+incrementally with platform APIs. It therefore precedes OpenTelemetry, Kafka,
+and test-runner reporters.
+
+The `eventlaw/jsonl` subpath accepts UTF-8 text or byte chunks and requires one
+already-normalized `TraceEvent` object per line. It validates framing and event
+shape with source/line diagnostics but leaves timestamp ordering to the semantic
+engines. It does not guess how arbitrary log fields map to `type`, `at`, or event
+attributes.
+
+OpenTelemetry is the leading second candidate, not an assumed commitment. Its
+event name, source/observed timestamps, nanosecond representation, attributes,
+and resource context require validation against real telemetry before a mapping
+is frozen. Kafka additionally requires explicit ordering, offset, replay, and
+consumer-failure semantics. The comparison is maintained in `docs/adapters.md`.
+
+## D-017 — Durable uniqueness stays outside the core until a real store contract
+
+**Status:** deferred intentionally, 2026-08-19.
+
+An external store could preserve lifetime uniqueness across restarts without
+retaining all keys in one process. A generic key-value interface is insufficient:
+correctness depends on atomic check-and-record, namespacing, replay idempotency,
+reset/window interaction, concurrency, and store-failure behavior.
+
+Making monitor operations asynchronous or fallible before those requirements
+are observed would widen the entire core API on speculation. The synchronous
+core therefore remains unchanged. After a webhook operator supplies restart and
+failure requirements, the first experiment should be a store-specific adapter;
+only repeated contracts justify a portable store interface or new serializable
+retention node.
+
+## D-018 — Explicit authorization for the performance milestone commit
+
+**Status:** accepted and consumed, 2026-08-19.
+
+After the indexed progress implementation and maintained Node/Actions update
+were verified, Luan explicitly authorized Codex to commit that prepared work and
+continue. Commit `a3ea299` (`perf: index progress deadlines`) was created with
+`Luan Taraschi` as both author and committer. It remains local until Luan
+separately authorizes or performs a push.
+
+This authorization applied to that commit only. D-010 remains the standing rule;
+the JSONL and validation work that followed is unstaged and uncommitted.

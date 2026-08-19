@@ -19,11 +19,10 @@ readability with external users and deciding the first integration adapters.
 - Package is intentionally private and unpublished.
 - Local Git repository initialized on `main`; private remote created at
   `https://github.com/luantaraschi/eventlaw` and linked as `origin`.
-- Luan explicitly authorized Codex to create and push the initial commit as a
-  one-time exception. Git identity is `Luan Taraschi`; the no-commit rule resumes
-  immediately after that push.
-- Initial commit `0882d88` is on `origin/main`; its Node 20/22 CI passed. Current
-  work remains unstaged and uncommitted for Luan.
+- Initial commit `0882d88` is on `origin/main`; its Node 20/22 CI passed.
+- Luan explicitly authorized the local performance commit `a3ea299`. Author and
+  committer are `Luan Taraschi`; local `main` is one commit ahead of the remote.
+  That exception is consumed and no push has been performed.
 - Semantic decisions and initial API are documented.
 - Offline verifier implements progress, exclusion, and uniqueness laws.
 - The published `lull` reducer is exercised as the first real integration.
@@ -38,13 +37,22 @@ readability with external users and deciding the first integration adapters.
 - Progress uses per-partition sets plus a deadline-ordered linked index. The
   benchmark changed from quadratic growth to an approximately linear curve.
 - The optional `fast-check` adapter shrinks both generated input and emitted trace.
-- 45 tests pass across 8 files, including 1,250 generated differential traces;
+- 56 tests pass across 9 files, including 1,250 generated differential traces;
   typecheck, ESM/CJS build, formatting, and audit pass.
 - A runnable webhook example demonstrates bounded delivery deduplication.
+- An experimental dependency-free `eventlaw/jsonl` subpath parses text or byte
+  streams with UTF-8, event-shape, source, and line diagnostics.
+- `docs/validation.md` defines two API-comprehension sessions and one webhook
+  operator session with observable pass criteria.
+- JSONL was selected as the first trace adapter; OpenTelemetry is the leading
+  second candidate, pending a real source record and timestamp/path decisions.
+- Durable lifetime uniqueness remains deferred to a store-specific adapter until
+  atomicity, replay, restart, and failure requirements come from an operator.
 - Node.js 22 is now the minimum; CI is prepared for Node 22/24 with official v7
   GitHub Actions.
-- Package dry-run: 20 files, 51.2 kB compressed, 272.2 kB unpacked. Package
+- Package dry-run: 26 files, 56.9 kB compressed, 296.1 kB unpacked. Package
   remains private.
+- All work after `a3ea299` is unstaged and uncommitted for Luan.
 
 ## Validation gates
 
@@ -58,12 +66,14 @@ readability with external users and deciding the first integration adapters.
 
 1. Put the README example in front of two TypeScript developers.
 2. Validate the webhook example with someone who operates webhook ingestion.
-3. Decide whether lifetime uniqueness needs an external state-store interface or
-   belongs in an adapter package.
-4. Choose the first trace-ingestion adapter from evidence: JSONL, OpenTelemetry,
-   Kafka, or a test-runner reporter.
-5. Luan reviews and commits the prepared performance/CI changes.
-6. Only after external validation, decide whether to make the repository public.
+3. Record the anonymized results using `docs/validation.md`; change the API or
+   README only when a misunderstanding repeats.
+4. Validate `eventlaw/jsonl` against one trace exported outside this repository.
+5. Request one sanitized OpenTelemetry event before designing its field and
+   timestamp mapping.
+6. Luan reviews the JSONL/validation working tree and decides when to push the
+   local performance commit.
+7. Only after external validation, decide whether to make the repository public.
 
 ## Known limitations
 
@@ -76,7 +86,9 @@ readability with external users and deciding the first integration adapters.
 - The deletion minimizer is 1-minimal, not guaranteed globally minimal.
 - Matchers support field equality, array membership, captures, and references only.
 - Object partition keys use JSON serialization and do not canonicalize key order.
-- There is no OpenTelemetry, Kafka, JSONL, Vitest, or Jest adapter yet.
+- JSONL input must already be normalized to `TraceEvent`; there is no mapping DSL
+  for arbitrary source fields.
+- There is no OpenTelemetry, Kafka, Vitest, or Jest adapter yet.
 
 ## Session log
 
@@ -129,3 +141,19 @@ A benchmark proved the pending-obligation scan quadratic: 4,000 opens took a
 the reproducible 4,000-open median to about 1 ms and handled 16,000 in under 5 ms
 without changing differential semantics. Node 20 support was also removed after
 EOL; the prepared CI targets maintained Node 22 and 24 lines.
+
+### 2026-08-19 — external validation and first trace adapter
+
+Luan authorized commit `a3ea299` for the performance/CI milestone; it was created
+under his Git identity and not pushed. The following work remains uncommitted.
+
+A repeatable validation protocol now measures API comprehension and webhook
+operational fit instead of collecting preference-based feedback. JSON Lines was
+selected over OpenTelemetry, Kafka, and test-runner reporters as the first thin
+adapter because it exercises recorded traces with no vendor dependency. The new
+`eventlaw/jsonl` subpath parses in-memory or streaming UTF-8 input and emits
+source/line diagnostics. A runnable webhook JSONL trace proves the package path.
+
+OpenTelemetry remains the next candidate after a real record resolves timestamp,
+attribute, and resource mapping. Durable uniqueness stays outside the core until
+an operator supplies atomicity, restart, replay, and failure requirements.

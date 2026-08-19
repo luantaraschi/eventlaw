@@ -36,7 +36,8 @@
     "bench:progress": "tsx bench/progress.ts",
     "example:lull": "tsx examples/lull.ts",
     "example:falsify": "tsx examples/falsify.ts",
-    "example:webhooks": "tsx examples/webhooks.ts"
+    "example:webhooks": "tsx examples/webhooks.ts",
+    "example:jsonl": "tsx examples/jsonl.ts"
   },
   "exports": {
     ".": {
@@ -48,6 +49,11 @@
       "types": "./dist/fast-check.d.ts",
       "import": "./dist/fast-check.js",
       "require": "./dist/fast-check.cjs"
+    },
+    "./jsonl": {
+      "types": "./dist/jsonl.d.ts",
+      "import": "./dist/jsonl.js",
+      "require": "./dist/jsonl.cjs"
     }
   },
   "main": "./dist/index.cjs",

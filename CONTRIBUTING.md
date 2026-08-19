@@ -31,6 +31,7 @@ npm run check
 | `npm run example:lull`     | Runs the real reducer integration               |
 | `npm run example:falsify`  | Generates and shrinks a failing input           |
 | `npm run example:webhooks` | Demonstrates windowed webhook deduplication     |
+| `npm run example:jsonl`    | Verifies a recorded JSONL trace                 |
 
 ## Reporting a bug
 
@@ -91,6 +92,10 @@ changes a business rule silently.
 
 **The main entry has no runtime dependencies.** Framework integrations belong in
 optional subpaths or adapters. `fast-check` is the current example.
+
+**Adapters preserve the boundary.** They keep event time explicit, report
+malformed input at its source, and do not leak vendor dependencies into the
+semantic core.
 
 **Tests do not sleep.** Temporal behavior is arithmetic over explicit numbers,
 not real timers.

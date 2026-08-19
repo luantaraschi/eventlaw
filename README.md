@@ -183,8 +183,26 @@ Three examples exercise different parts of the project:
 npm run example:lull      # real reducer + minimal temporal failure
 npm run example:falsify   # generated commands + two-stage shrinking
 npm run example:webhooks  # bounded delivery deduplication
+npm run example:jsonl     # verify a recorded JSONL trace
 npm run bench:progress    # progress-monitor scaling
 ```
+
+Recorded traces can be read incrementally from the dependency-free
+`eventlaw/jsonl` subpath:
+
+```ts
+import { createReadStream } from 'node:fs'
+import { readJsonl } from 'eventlaw/jsonl'
+
+const trace = await readJsonl(createReadStream('events.jsonl'), {
+  source: 'events.jsonl',
+})
+const report = verifyTrace(trace, laws, { complete: true })
+```
+
+Malformed records report their source and one-based line number. The adapter
+expects each line to already contain an event with a non-empty `type` and finite
+millisecond `at`; source-specific normalization stays outside the semantic core.
 
 ## What it is — and is not
 
@@ -207,9 +225,10 @@ The current vertical slice includes:
 - deletion-minimal failing traces and readable timelines;
 - an incremental monitor with observable retention;
 - differential tests proving online/offline prefix equivalence;
-- optional property-based generation and shrinking.
+- optional property-based generation and shrinking;
+- incremental JSONL trace ingestion with line-aware diagnostics.
 
-The full suite has 45 tests across 8 files, including 1,250 generated
+The full suite has 56 tests across 9 files, including 1,250 generated
 differential traces. TypeScript types, ESM, CommonJS, declarations, formatting,
 and the package tarball are checked locally and in CI.
 
@@ -229,12 +248,17 @@ that justified the deadline index.
 
 The normative rules live in [the semantic spec](docs/spec.md). Accepted trade-offs
 and their rationale are recorded in [DECISIONS.md](DECISIONS.md).
+The [adapter strategy](docs/adapters.md) records why JSONL came first and what
+must be learned before OpenTelemetry, Kafka, or durable-state integration.
 
 ## Contributing
 
 Concrete traces are the best feature requests. If a production rule is hard to
 express, open an issue with the smallest event sequence that should pass or fail
 and write the rule once in plain language.
+
+The [external validation protocol](docs/validation.md) defines the comprehension
+and webhook-operator sessions required before publication.
 
 [CONTRIBUTING.md](CONTRIBUTING.md) covers setup, tests, semantic changes, and pull
 request expectations. Participation is governed by the
