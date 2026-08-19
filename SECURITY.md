@@ -1,0 +1,22 @@
+# Security policy
+
+## Supported versions
+
+`eventlaw` is an unpublished research preview. No version currently receives a
+formal security-support guarantee.
+
+## Reporting a vulnerability
+
+Do not open a public issue for a suspected vulnerability. Use GitHub's private
+security-advisory flow for this repository. Include:
+
+- the affected commit or code path;
+- a minimal reproduction or trace when possible;
+- the expected impact;
+- any mitigation you already tested.
+
+Reports will be acknowledged as soon as practical. Please allow time to confirm
+the behavior and prepare a coordinated fix before public disclosure.
+
+Ordinary correctness bugs, surprising reports, and DSL proposals belong in the
+public issue tracker rather than the security channel.

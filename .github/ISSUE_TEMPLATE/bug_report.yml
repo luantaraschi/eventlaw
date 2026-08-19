@@ -1,0 +1,50 @@
+name: Bug report
+description: A law, report, counterexample, or monitor behaves incorrectly
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        The fastest bug reports contain one law and the smallest timestamped trace that reproduces it.
+
+  - type: textarea
+    id: law
+    attributes:
+      label: Law definition
+      description: Paste the smallest law that shows the problem.
+      render: ts
+    validations:
+      required: true
+
+  - type: textarea
+    id: trace
+    attributes:
+      label: Trace or monitor calls
+      description: Include every timestamp and any calls to advanceTo or complete.
+      render: ts
+    validations:
+      required: true
+
+  - type: textarea
+    id: result
+    attributes:
+      label: Actual and expected result
+      description: What eventlaw reported, and what you expected instead.
+    validations:
+      required: true
+
+  - type: input
+    id: revision
+    attributes:
+      label: Version or commit
+      placeholder: 0.0.0 or a commit SHA
+    validations:
+      required: true
+
+  - type: input
+    id: node
+    attributes:
+      label: Node.js version
+      placeholder: 20.19.0
+    validations:
+      required: false

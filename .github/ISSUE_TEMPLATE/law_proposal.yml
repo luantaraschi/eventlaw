@@ -1,0 +1,48 @@
+name: Law proposal
+description: A production rule the current DSL cannot express clearly
+labels: ['proposal']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Start with the rule and its traces. An operator is only useful when its semantics and online retention are explainable.
+
+  - type: textarea
+    id: rule
+    attributes:
+      label: The rule in plain language
+      description: Write it once without API or temporal-logic notation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: passing
+    attributes:
+      label: Smallest passing trace
+      render: json
+    validations:
+      required: true
+
+  - type: textarea
+    id: failing
+    attributes:
+      label: Smallest failing trace
+      render: json
+    validations:
+      required: true
+
+  - type: textarea
+    id: current
+    attributes:
+      label: Why current operators are insufficient
+      description: Show what you tried or why it becomes misleading.
+    validations:
+      required: true
+
+  - type: textarea
+    id: retention
+    attributes:
+      label: Online retention
+      description: What must a live monitor remember, and when can it release that state?
+    validations:
+      required: true

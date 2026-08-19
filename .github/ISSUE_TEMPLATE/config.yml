@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Ask a question
+    url: https://github.com/luantaraschi/eventlaw/discussions/categories/q-a
+    about: Ask about modeling a rule, trace boundaries, or integrating an event source.
+  - name: Share a real law
+    url: https://github.com/luantaraschi/eventlaw/discussions/categories/show-and-tell
+    about: Show a law, counterexample, or adapter from a real event-driven system.
