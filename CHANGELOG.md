@@ -29,6 +29,7 @@ the package leaves research preview.
 ### Changed
 
 - Replaced repeated progress-obligation scans with a deadline-ordered index.
+- Treat empty OTLP AnyValue bodies emitted by the JavaScript SDK as absent.
 - Raised the minimum Node.js version from 20 to 22 after Node 20 reached EOL.
 - Updated GitHub Actions to `checkout@v7` and `setup-node@v7` and CI coverage to
   Node.js 22 and 24.

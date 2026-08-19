@@ -1,6 +1,8 @@
 # Adapter strategy
 
-Status: JSONL and structural OTLP/JSON implementations are experimental.
+Status: JSONL and structural OTLP/JSON implementations are experimental. OTLP
+has been exercised against both the protocol fixture and a real JavaScript SDK
+export.
 
 Adapters translate external records into `TraceEvent`. They must not redefine
 law semantics, read the wall clock for the core, or make hidden retention
@@ -83,6 +85,8 @@ The conversion is deliberately explicit:
 - nanoseconds are truncated to integer milliseconds, while their exact decimal
   strings remain in `otel.timeUnixNano` and `otel.observedTimeUnixNano`;
 - the decoded AnyValue body stays at `body`, including a body-owned `type`;
+- an empty AnyValue object emitted by the JavaScript SDK represents an absent
+  body and is omitted;
 - record attributes, resource attributes, and instrumentation scope stay under
   `otel.attributes`, `otel.resource`, and `otel.scope`;
 - dotted semantic attribute keys become nested objects so existing matcher paths
@@ -93,11 +97,17 @@ Int64 AnyValues become numbers only inside JavaScript's safe integer range and
 otherwise remain decimal strings. Bytes remain their OTLP/JSON base64 strings.
 Malformed structures fail with their full OTLP object path.
 
-The test fixture is copied unchanged from the official
+One test fixture is copied unchanged from the official
 [`opentelemetry-proto` event example](https://github.com/open-telemetry/opentelemetry-proto/blob/b5947908941290bfa11cec2abf714e700412b5d7/examples/events.json).
-This is structural conversion only: protobuf, OTLP/HTTP, Collector connections,
+A second fixture was captured from an actual `application/json` request emitted
+by `@opentelemetry/sdk-logs@0.221.0` and
+`@opentelemetry/exporter-logs-otlp-http@0.221.0`. It contains two named Events
+from distinct instrumentation scopes and one ordinary log.
+
+This is structural conversion only: protobuf, Collector connections,
 compression, authentication, backpressure, and ordering across requests remain
-outside the adapter.
+outside the adapter. The HTTP exporter was used to produce test evidence, not
+added as a package dependency.
 
 ## Persistent uniqueness
 

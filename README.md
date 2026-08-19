@@ -219,6 +219,12 @@ milliseconds; exact timestamp strings remain under `otel`. The body stays under
 `body`, while attributes, resource, and instrumentation scope stay namespaced
 under `otel` so none can overwrite `type` or `at`.
 
+The mapping is tested both against the protocol's official fixture and an
+OTLP/HTTP request captured from `@opentelemetry/sdk-logs` and
+`@opentelemetry/exporter-logs-otlp-http`. Empty AnyValue bodies emitted by the
+JavaScript SDK are treated as absent, while ordinary logs remain visible through
+`skippedLogRecords`.
+
 ## What it is — and is not
 
 `eventlaw` is a small runtime-verification core for event traces. It owns law
@@ -244,7 +250,7 @@ The current vertical slice includes:
 - incremental JSONL trace ingestion with line-aware diagnostics;
 - structural OTLP/JSON event conversion tested against the official fixture.
 
-The full suite has 64 tests across 10 files, including 1,250 generated
+The full suite has 66 tests across 10 files, including 1,250 generated
 differential traces. TypeScript types, ESM, CommonJS, declarations, formatting,
 and the package tarball are checked locally and in CI.
 

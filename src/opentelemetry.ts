@@ -106,7 +106,10 @@ function decodeEvent(
     otel,
   }
 
-  if (record.body !== undefined) event.body = decodeAnyValue(record.body, `${path}.body`)
+  if (record.body !== undefined) {
+    const body = expectRecord(record.body, `${path}.body`)
+    if (Object.keys(body).length > 0) event.body = decodeAnyValue(body, `${path}.body`)
+  }
   return event
 }
 

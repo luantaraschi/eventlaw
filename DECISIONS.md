@@ -256,3 +256,39 @@ order is preserved because sorting would invent causality.
 This decision does not add an SDK, protobuf decoder, HTTP receiver, Collector
 connection, authentication, compression, or backpressure policy. Those require
 a real operating environment and belong in a later integration package.
+
+## D-021 — Explicit authorization for the OTLP adapter commit
+
+**Status:** accepted and consumed, 2026-08-19.
+
+While the next validation step was starting, Luan explicitly authorized
+committing the prepared OTLP/JSON adapter. Commit `b0c225e`
+(`feat: add otlp json event adapter`) was created with `Luan Taraschi` as both
+author and committer. No push was requested or performed; local `main` became
+three commits ahead of `origin/main`.
+
+This authorization applied to that commit only. D-010 remains the standing rule;
+the JavaScript SDK compatibility work that followed is unstaged and uncommitted.
+
+## D-022 — Validate OTLP with an emitted request, not only a protocol fixture
+
+**Status:** accepted, 2026-08-19.
+
+Repository search did not find a complete second Event payload produced by an
+SDK or Collector. A temporary, isolated project therefore used the official
+JavaScript logging API, SDK, resources, semantic conventions, and OTLP/HTTP
+exporter to send a deterministic `application/json` request to a local capture
+server. No OpenTelemetry package was added to `eventlaw`.
+
+The captured batch contains two named Events from distinct instrumentation
+scopes and one ordinary log. It proved the existing mapping for nested bodies,
+arrays, numeric AnyValues, dotted attributes, resource metadata, multiple
+scopes, skipped logs, and correlated laws. It also exposed one incompatibility:
+an Event emitted without a body is serialized as `body: {}`. The adapter now
+treats that empty AnyValue object as an absent body while continuing to reject
+non-empty objects without a recognized AnyValue variant.
+
+The fixed payload is retained as a regression fixture with exact SDK versions
+and capture method documented. It is evidence for structural OTLP/JSON
+compatibility, not evidence for Collector networking, protobuf, backpressure, or
+ordering across separate export requests.

@@ -1,0 +1,138 @@
+{
+  "resourceLogs": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "eventlaw-sdk-validation"
+            }
+          },
+          {
+            "key": "service.version",
+            "value": {
+              "stringValue": "1.0.0"
+            }
+          },
+          {
+            "key": "deployment.environment.name",
+            "value": {
+              "stringValue": "validation"
+            }
+          }
+        ],
+        "droppedAttributesCount": 0
+      },
+      "scopeLogs": [
+        {
+          "scope": {
+            "name": "checkout.events",
+            "version": "2.3.0"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1700000000123456789",
+              "observedTimeUnixNano": "1700000000223456789",
+              "severityNumber": 9,
+              "severityText": "INFO",
+              "body": {
+                "kvlistValue": {
+                  "values": [
+                    {
+                      "key": "type",
+                      "value": {
+                        "stringValue": "checkout-result"
+                      }
+                    },
+                    {
+                      "key": "orderId",
+                      "value": {
+                        "stringValue": "order-42"
+                      }
+                    },
+                    {
+                      "key": "items",
+                      "value": {
+                        "arrayValue": {
+                          "values": [
+                            {
+                              "stringValue": "sku-1"
+                            },
+                            {
+                              "stringValue": "sku-2"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "eventName": "order.accepted",
+              "attributes": [
+                {
+                  "key": "order.id",
+                  "value": {
+                    "stringValue": "order-42"
+                  }
+                },
+                {
+                  "key": "customer.tier",
+                  "value": {
+                    "stringValue": "gold"
+                  }
+                },
+                {
+                  "key": "retry.count",
+                  "value": {
+                    "intValue": 0
+                  }
+                }
+              ],
+              "droppedAttributesCount": 0
+            },
+            {
+              "timeUnixNano": "1700000006000000000",
+              "observedTimeUnixNano": "1700000006200000000",
+              "body": {
+                "stringValue": "ordinary log record"
+              },
+              "attributes": [],
+              "droppedAttributesCount": 0
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "fulfillment.events",
+            "version": "4.5.0"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1700000005987654321",
+              "observedTimeUnixNano": "1700000006100000000",
+              "body": {},
+              "eventName": "order.shipped",
+              "attributes": [
+                {
+                  "key": "order.id",
+                  "value": {
+                    "stringValue": "order-42"
+                  }
+                },
+                {
+                  "key": "shipping.carrier.name",
+                  "value": {
+                    "stringValue": "parcel-example"
+                  }
+                }
+              ],
+              "droppedAttributesCount": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

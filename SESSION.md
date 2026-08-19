@@ -20,9 +20,10 @@ readability with external users and deciding the first integration adapters.
 - Local Git repository initialized on `main`; private remote created at
   `https://github.com/luantaraschi/eventlaw` and linked as `origin`.
 - Initial commit `0882d88` is on `origin/main`; its Node 20/22 CI passed.
-- Luan explicitly authorized local commits `a3ea299` (performance) and `360e851`
-  (JSONL). Author and committer are `Luan Taraschi`; local `main` is two commits
-  ahead of the remote. Both exceptions are consumed and no push was performed.
+- Luan explicitly authorized local commits `a3ea299` (performance), `360e851`
+  (JSONL), and `b0c225e` (OTLP/JSON). Author and committer are `Luan Taraschi`;
+  local `main` is three commits ahead of the remote. All exceptions are consumed
+  and no push was performed.
 - Semantic decisions and initial API are documented.
 - Offline verifier implements progress, exclusion, and uniqueness laws.
 - The published `lull` reducer is exercised as the first real integration.
@@ -37,7 +38,7 @@ readability with external users and deciding the first integration adapters.
 - Progress uses per-partition sets plus a deadline-ordered linked index. The
   benchmark changed from quadratic growth to an approximately linear curve.
 - The optional `fast-check` adapter shrinks both generated input and emitted trace.
-- 64 tests pass across 10 files, including 1,250 generated differential traces;
+- 66 tests pass across 10 files, including 1,250 generated differential traces;
   typecheck, ESM/CJS build, formatting, and audit pass.
 - A runnable webhook example demonstrates bounded delivery deduplication.
 - An experimental dependency-free `eventlaw/jsonl` subpath parses text or byte
@@ -49,13 +50,18 @@ readability with external users and deciding the first integration adapters.
   It is tested against the official protocol fixture pinned at commit `b594790`.
 - The OTLP adapter preserves body/metadata namespaces, exact nanoseconds, input
   order, visible skipped logs, and readable nested semantic attributes.
+- A second OTLP fixture was emitted by the official JavaScript SDK and HTTP
+  exporter. It covers multiple scopes, structured bodies, arrays, numeric
+  AnyValues, an ordinary log, and an Event without a body.
+- Empty AnyValue bodies serialized by the JavaScript SDK are treated as absent;
+  non-empty invalid AnyValue objects still fail.
 - Durable lifetime uniqueness remains deferred to a store-specific adapter until
   atomicity, replay, restart, and failure requirements come from an operator.
 - Node.js 22 is now the minimum; CI is prepared for Node 22/24 with official v7
   GitHub Actions.
-- Package dry-run: 32 files, 66.5 kB compressed, 356.1 kB unpacked. Package
+- Package dry-run: 32 files, 66.7 kB compressed, 357.1 kB unpacked. Package
   remains private.
-- All work after `360e851` is unstaged and uncommitted for Luan.
+- All work after `b0c225e` is unstaged and uncommitted for Luan.
 
 ## Validation gates
 
@@ -71,12 +77,12 @@ readability with external users and deciding the first integration adapters.
 2. Validate the webhook example with someone who operates webhook ingestion.
 3. Record the anonymized results using `docs/validation.md`; change the API or
    README only when a misunderstanding repeats.
-4. Validate the OTLP mapping against a second payload exported by a real SDK or
-   Collector, especially missing timestamps and multiple resource/scope batches.
-5. Ask whether truncating nanoseconds and nesting semantic attribute keys matches
+4. Validate the OTLP mapping against a Collector-produced payload or a real
+   application export, especially multiple resource batches and trace context.
+5. Ask whether truncating nanoseconds and nesting semantic attribute keys match
    how an operator would write laws.
-6. Luan reviews the OpenTelemetry working tree and decides when to push the two
-   local commits.
+6. Luan reviews the SDK-compatibility working tree and decides when to push the
+   three local commits.
 7. Only after external validation, decide whether to make the repository public.
 
 ## Known limitations
@@ -185,3 +191,19 @@ prefers source time with observed-time fallback, retains exact nanoseconds,
 decodes AnyValue, namespaces body/resource/scope data, nests dotted semantic
 attributes, rejects collisions, and preserves request order. It does not add an
 SDK, network receiver, protobuf, or cross-request ordering policy.
+
+### 2026-08-19 — JavaScript SDK export validation
+
+Luan authorized commit `b0c225e` for the structural OTLP adapter; it was created
+under his Git identity and not pushed. The following work remains uncommitted.
+
+A temporary isolated project used the official JavaScript logs API/SDK and
+OTLP/HTTP exporter to send two deterministic Events from different
+instrumentation scopes plus one ordinary log to a local capture server. The
+captured request is retained as a versioned regression fixture; none of those
+packages became an `eventlaw` dependency.
+
+The adapter passed the batch except for a real exporter behavior: an Event with
+no body arrived as `body: {}`. Empty AnyValue objects are now omitted as absent
+bodies, while malformed non-empty variants still fail. A correlated progress law
+runs directly over the two converted SDK Events.
