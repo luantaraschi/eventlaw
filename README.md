@@ -204,6 +204,21 @@ Malformed records report their source and one-based line number. The adapter
 expects each line to already contain an event with a non-empty `type` and finite
 millisecond `at`; source-specific normalization stays outside the semantic core.
 
+OTLP/JSON event batches have a dedicated dependency-free adapter:
+
+```ts
+import { eventsFromOtlpJson } from 'eventlaw/opentelemetry'
+
+const { trace, skippedLogRecords } = eventsFromOtlpJson(otlpPayload)
+const report = verifyTrace(trace, laws, { complete: true })
+```
+
+Only log records with a non-empty OpenTelemetry `eventName` become events.
+`timeUnixNano` is preferred over `observedTimeUnixNano` and truncated to explicit
+milliseconds; exact timestamp strings remain under `otel`. The body stays under
+`body`, while attributes, resource, and instrumentation scope stay namespaced
+under `otel` so none can overwrite `type` or `at`.
+
 ## What it is — and is not
 
 `eventlaw` is a small runtime-verification core for event traces. It owns law
@@ -211,9 +226,9 @@ definitions, deterministic semantics, counterexample minimization, and
 incremental operator state.
 
 It is not an event bus, workflow engine, telemetry backend, test runner, or
-general-purpose temporal-logic solver. It does not ingest Kafka or OpenTelemetry
-directly yet. Adapters should translate those systems into `TraceEvent` objects
-without coupling the semantic core to their SDKs.
+general-purpose temporal-logic solver. It does not connect to Kafka or an
+OpenTelemetry Collector. Adapters translate source payloads into `TraceEvent`
+objects without coupling the semantic core to their SDKs.
 
 ## Project status
 
@@ -226,9 +241,10 @@ The current vertical slice includes:
 - an incremental monitor with observable retention;
 - differential tests proving online/offline prefix equivalence;
 - optional property-based generation and shrinking;
-- incremental JSONL trace ingestion with line-aware diagnostics.
+- incremental JSONL trace ingestion with line-aware diagnostics;
+- structural OTLP/JSON event conversion tested against the official fixture.
 
-The full suite has 56 tests across 9 files, including 1,250 generated
+The full suite has 64 tests across 10 files, including 1,250 generated
 differential traces. TypeScript types, ESM, CommonJS, declarations, formatting,
 and the package tarball are checked locally and in CI.
 
@@ -248,8 +264,9 @@ that justified the deadline index.
 
 The normative rules live in [the semantic spec](docs/spec.md). Accepted trade-offs
 and their rationale are recorded in [DECISIONS.md](DECISIONS.md).
-The [adapter strategy](docs/adapters.md) records why JSONL came first and what
-must be learned before OpenTelemetry, Kafka, or durable-state integration.
+The [adapter strategy](docs/adapters.md) records the JSONL and OpenTelemetry
+mapping contracts and what must be learned before Kafka or durable-state
+integration.
 
 ## Contributing
 

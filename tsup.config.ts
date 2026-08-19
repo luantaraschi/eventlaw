@@ -1,7 +1,7 @@
 import { defineConfig } from 'tsup'
 
 export default defineConfig({
-  entry: ['src/index.ts', 'src/fast-check.ts', 'src/jsonl.ts'],
+  entry: ['src/index.ts', 'src/fast-check.ts', 'src/jsonl.ts', 'src/opentelemetry.ts'],
   format: ['esm', 'cjs'],
   dts: true,
   clean: true,

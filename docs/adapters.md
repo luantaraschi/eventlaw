@@ -1,6 +1,6 @@
 # Adapter strategy
 
-Status: first decision recorded; JSONL implementation is experimental.
+Status: JSONL and structural OTLP/JSON implementations are experimental.
 
 Adapters translate external records into `TraceEvent`. They must not redefine
 law semantics, read the wall clock for the core, or make hidden retention
@@ -8,24 +8,24 @@ decisions.
 
 ## First adapter comparison
 
-| Candidate            | Immediate hypothesis tested                  | Runtime coupling       | Semantic questions before use                         | Decision    |
-| -------------------- | -------------------------------------------- | ---------------------- | ----------------------------------------------------- | ----------- |
-| JSON Lines           | Verify exported or piped recorded traces     | None                   | Input must contain `type` and millisecond `at`        | Build first |
-| OpenTelemetry events | Run laws over a standard telemetry model     | Avoidable structurally | nanoseconds, timestamp choice, attributes, resources  | Investigate |
-| Kafka                | Monitor a live broker stream                 | Client and operations  | ordering across partitions, offsets, replay, failures | Wait        |
-| Test-runner reporter | Surface laws inside an existing test command | Runner-specific        | Vitest/Jest lifecycle and trace ownership             | Wait        |
+| Candidate            | Immediate hypothesis tested                  | Runtime coupling      | Semantic questions before use                         | Decision     |
+| -------------------- | -------------------------------------------- | --------------------- | ----------------------------------------------------- | ------------ |
+| JSON Lines           | Verify exported or piped recorded traces     | None                  | Input must contain `type` and millisecond `at`        | Build first  |
+| OpenTelemetry events | Run laws over a standard telemetry model     | None for OTLP/JSON    | connection, ordering across batches, backpressure     | Experimental |
+| Kafka                | Monitor a live broker stream                 | Client and operations | ordering across partitions, offsets, replay, failures | Wait         |
+| Test-runner reporter | Surface laws inside an existing test command | Runner-specific       | Vitest/Jest lifecycle and trace ownership             | Wait         |
 
 [JSON Lines](https://jsonlines.org/) is UTF-8 text with one JSON value per line,
 which makes it suitable for logs, pipelines, and incremental processing. The
 adapter deliberately accepts only objects already shaped as `TraceEvent`; vendor
 normalization belongs in a source-specific adapter.
 
-OpenTelemetry is the leading second candidate because its stable logs data model
-has an event name, source timestamp, observed timestamp, attributes, and resource
-context. That richness is also why a direct mapping should wait for real data:
-OpenTelemetry timestamps use nanoseconds while `eventlaw` currently uses numeric
-milliseconds, and flattening attributes or resources could create path
-collisions. See the official
+OpenTelemetry became the second adapter after testing the official OTLP/JSON
+event fixture. Its stable logs data model has an event name, source timestamp,
+observed timestamp, attributes, and resource context. The fixture proved that
+generic JSONL is not enough: OTLP is a nested batch, timestamps are uint64
+nanosecond strings, semantic attributes use dotted keys, and a body may contain
+its own `type`. See the official
 [logs data model](https://opentelemetry.io/docs/specs/otel/logs/data-model/) and
 [event conventions](https://opentelemetry.io/docs/specs/semconv/general/events/).
 
@@ -60,6 +60,44 @@ const trace = await readJsonl(createReadStream('events.jsonl'), {
   source: 'events.jsonl',
 })
 ```
+
+## OTLP/JSON event contract
+
+`eventlaw/opentelemetry` accepts an already-decoded OTLP/JSON
+`ExportLogsServiceRequest`. It has no OpenTelemetry SDK dependency and does not
+open a network connection.
+
+```ts
+import { eventsFromOtlpJson } from 'eventlaw/opentelemetry'
+
+const { trace, skippedLogRecords } = eventsFromOtlpJson(payload)
+```
+
+The conversion is deliberately explicit:
+
+- only `LogRecord` values with a non-empty `eventName` become `TraceEvent`;
+  ordinary logs are counted in `skippedLogRecords`;
+- `eventName` becomes `type`;
+- `timeUnixNano` becomes `at`, falling back to `observedTimeUnixNano` when the
+  source timestamp is absent;
+- nanoseconds are truncated to integer milliseconds, while their exact decimal
+  strings remain in `otel.timeUnixNano` and `otel.observedTimeUnixNano`;
+- the decoded AnyValue body stays at `body`, including a body-owned `type`;
+- record attributes, resource attributes, and instrumentation scope stay under
+  `otel.attributes`, `otel.resource`, and `otel.scope`;
+- dotted semantic attribute keys become nested objects so existing matcher paths
+  remain readable; ambiguous namespace collisions fail instead of overwriting;
+- input order is preserved. The adapter never silently sorts batches.
+
+Int64 AnyValues become numbers only inside JavaScript's safe integer range and
+otherwise remain decimal strings. Bytes remain their OTLP/JSON base64 strings.
+Malformed structures fail with their full OTLP object path.
+
+The test fixture is copied unchanged from the official
+[`opentelemetry-proto` event example](https://github.com/open-telemetry/opentelemetry-proto/blob/b5947908941290bfa11cec2abf714e700412b5d7/examples/events.json).
+This is structural conversion only: protobuf, OTLP/HTTP, Collector connections,
+compression, authentication, backpressure, and ordering across requests remain
+outside the adapter.
 
 ## Persistent uniqueness
 

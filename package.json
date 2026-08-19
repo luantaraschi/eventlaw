@@ -54,6 +54,11 @@
       "types": "./dist/jsonl.d.ts",
       "import": "./dist/jsonl.js",
       "require": "./dist/jsonl.cjs"
+    },
+    "./opentelemetry": {
+      "types": "./dist/opentelemetry.d.ts",
+      "import": "./dist/opentelemetry.js",
+      "require": "./dist/opentelemetry.cjs"
     }
   },
   "main": "./dist/index.cjs",

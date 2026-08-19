@@ -23,6 +23,8 @@ the package leaves research preview.
   traces with source/line diagnostics.
 - External API and webhook validation protocol plus an evidence-based adapter
   comparison.
+- Experimental dependency-free `eventlaw/opentelemetry` conversion for OTLP/JSON
+  Events, verified against the official OpenTelemetry protocol fixture.
 
 ### Changed
 

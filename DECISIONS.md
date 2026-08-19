@@ -217,3 +217,42 @@ separately authorizes or performs a push.
 
 This authorization applied to that commit only. D-010 remains the standing rule;
 the JSONL and validation work that followed is unstaged and uncommitted.
+
+## D-019 — Explicit authorization for the JSONL milestone commit
+
+**Status:** accepted and consumed, 2026-08-19.
+
+Luan explicitly authorized committing the prepared JSONL/validation milestone
+and starting the next step. Commit `360e851` (`feat: add jsonl trace adapter`)
+was created with `Luan Taraschi` as both author and committer. No push was
+requested or performed; local `main` became two commits ahead of `origin/main`.
+
+This authorization applied to that commit only. D-010 remains the standing rule;
+the OpenTelemetry work that followed is unstaged and uncommitted.
+
+## D-020 — OTLP/JSON Events get a structural adapter, not an SDK integration
+
+**Status:** accepted experimentally, 2026-08-19.
+
+No external JSONL trace existed in the workspace. Testing the JSONL boundary
+against OpenTelemetry's official `events.json` fixture produced a concrete
+failure: OTLP/JSON is a nested request batch rather than one normalized event per
+line. The record also contains an `eventName`, uint64 nanosecond timestamps,
+dotted attribute keys, resource and scope metadata, and a body whose own `type`
+must not overwrite the event type.
+
+The dependency-free `eventlaw/opentelemetry` subpath therefore converts an
+already-decoded OTLP/JSON `ExportLogsServiceRequest`. It processes only log
+records with a non-empty `eventName` and reports how many ordinary logs it
+skipped. Source time is preferred over observed time, following the
+OpenTelemetry logs data model; exact nanoseconds are retained while `at` uses
+truncated integer milliseconds.
+
+Body, record attributes, resource, and instrumentation scope remain namespaced.
+Dotted semantic attribute keys become nested objects for matcher readability;
+namespace collisions are errors rather than silent overwrites. OTLP request
+order is preserved because sorting would invent causality.
+
+This decision does not add an SDK, protobuf decoder, HTTP receiver, Collector
+connection, authentication, compression, or backpressure policy. Those require
+a real operating environment and belong in a later integration package.
