@@ -225,6 +225,30 @@ OTLP/HTTP request captured from `@opentelemetry/sdk-logs` and
 JavaScript SDK are treated as absent, while ordinary logs remain visible through
 `skippedLogRecords`.
 
+The same SDK batch was also sent through the official OpenTelemetry Collector
+with JSON re-export. Default-field omission and canonical int64 strings produce
+the exact same converted trace as the direct SDK request.
+
+A second Collector capture batches Events from `checkout-api` and
+`fulfillment-worker` into one request. Their resource metadata stays distinct,
+while `traceId`, `spanId`, and trace `flags` remain available under `otel`. A law
+can therefore correlate an order across services without flattening resource
+identity:
+
+```ts
+after(
+  event('order.accepted')
+    .capture('orderId', 'otel.attributes.order.id')
+    .capture('traceId', 'otel.traceId'),
+)
+  .eventually(
+    event('order.shipped')
+      .equals('otel.attributes.order.id', ref('orderId'))
+      .equals('otel.traceId', ref('traceId')),
+  )
+  .within(6_000)
+```
+
 ## What it is — and is not
 
 `eventlaw` is a small runtime-verification core for event traces. It owns law
@@ -250,7 +274,7 @@ The current vertical slice includes:
 - incremental JSONL trace ingestion with line-aware diagnostics;
 - structural OTLP/JSON event conversion tested against the official fixture.
 
-The full suite has 66 tests across 10 files, including 1,250 generated
+The full suite has 69 tests across 10 files, including 1,250 generated
 differential traces. TypeScript types, ESM, CommonJS, declarations, formatting,
 and the package tarball are checked locally and in CI.
 

@@ -91,6 +91,7 @@ function decodeEvent(
 
   copyString(record, 'traceId', otel, path)
   copyString(record, 'spanId', otel, path)
+  copyUint32(record, 'flags', otel, path)
   copyString(record, 'severityText', otel, path)
   copyFiniteNumber(record, 'severityNumber', otel, path)
 
@@ -322,6 +323,20 @@ function copyFiniteNumber(
   if (value === undefined) return
   if (typeof value !== 'number' || !Number.isFinite(value)) {
     throw new OtlpEventError(`${path}.${key}`, 'expected a finite number')
+  }
+  target[key] = value
+}
+
+function copyUint32(
+  source: UnknownRecord,
+  key: string,
+  target: Record<string, JsonValue>,
+  path: string,
+): void {
+  const value = source[key]
+  if (value === undefined) return
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 0 || value > 0xffff_ffff) {
+    throw new OtlpEventError(`${path}.${key}`, 'expected a uint32')
   }
   target[key] = value
 }

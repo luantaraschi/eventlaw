@@ -19,11 +19,10 @@ readability with external users and deciding the first integration adapters.
 - Package is intentionally private and unpublished.
 - Local Git repository initialized on `main`; private remote created at
   `https://github.com/luantaraschi/eventlaw` and linked as `origin`.
-- Initial commit `0882d88` is on `origin/main`; its Node 20/22 CI passed.
-- Luan explicitly authorized local commits `a3ea299` (performance), `360e851`
-  (JSONL), and `b0c225e` (OTLP/JSON). Author and committer are `Luan Taraschi`;
-  local `main` is three commits ahead of the remote. All exceptions are consumed
-  and no push was performed.
+- Initial commit `0882d88` and the five later milestones through the
+  multi-resource Collector validation are on `origin/main`. Luan explicitly
+  authorized every commit and the direct push; author and committer are
+  `Luan Taraschi`. All exceptions are consumed.
 - Semantic decisions and initial API are documented.
 - Offline verifier implements progress, exclusion, and uniqueness laws.
 - The published `lull` reducer is exercised as the first real integration.
@@ -38,7 +37,7 @@ readability with external users and deciding the first integration adapters.
 - Progress uses per-partition sets plus a deadline-ordered linked index. The
   benchmark changed from quadratic growth to an approximately linear curve.
 - The optional `fast-check` adapter shrinks both generated input and emitted trace.
-- 66 tests pass across 10 files, including 1,250 generated differential traces;
+- 69 tests pass across 10 files, including 1,250 generated differential traces;
   typecheck, ESM/CJS build, formatting, and audit pass.
 - A runnable webhook example demonstrates bounded delivery deduplication.
 - An experimental dependency-free `eventlaw/jsonl` subpath parses text or byte
@@ -55,13 +54,19 @@ readability with external users and deciding the first integration adapters.
   AnyValues, an ordinary log, and an Event without a body.
 - Empty AnyValue bodies serialized by the JavaScript SDK are treated as absent;
   non-empty invalid AnyValue objects still fail.
+- The SDK batch was passed through Collector 0.157.0 and captured again. Collector
+  default omission and int64 canonicalization produce the exact same conversion.
+- Two independent application resources were batched by Collector into one
+  request. Cross-service laws can correlate their shared trace ID while resource
+  identity and distinct span IDs remain visible; OTLP trace flags are preserved.
 - Durable lifetime uniqueness remains deferred to a store-specific adapter until
   atomicity, replay, restart, and failure requirements come from an operator.
 - Node.js 22 is now the minimum; CI is prepared for Node 22/24 with official v7
   GitHub Actions.
-- Package dry-run: 32 files, 66.7 kB compressed, 357.1 kB unpacked. Package
+- Package dry-run: 32 files, 67.3 kB compressed, 360.2 kB unpacked. Package
   remains private.
-- All work after `b0c225e` is unstaged and uncommitted for Luan.
+- The Collector and multi-resource milestone is committed and pushed; the
+  working tree is expected to be clean at handoff.
 
 ## Validation gates
 
@@ -77,12 +82,11 @@ readability with external users and deciding the first integration adapters.
 2. Validate the webhook example with someone who operates webhook ingestion.
 3. Record the anonymized results using `docs/validation.md`; change the API or
    README only when a misunderstanding repeats.
-4. Validate the OTLP mapping against a Collector-produced payload or a real
-   application export, especially multiple resource batches and trace context.
-5. Ask whether truncating nanoseconds and nesting semantic attribute keys match
-   how an operator would write laws.
-6. Luan reviews the SDK-compatibility working tree and decides when to push the
-   three local commits.
+4. Validate the OTLP mapping against an anonymized external application export;
+   the deterministic two-service harness is complete.
+5. Ask whether truncating nanoseconds, nesting semantic attribute keys, and
+   matching on trace IDs fit how an operator would write laws.
+6. Verify the latest GitHub Actions run after the direct `main` push.
 7. Only after external validation, decide whether to make the repository public.
 
 ## Known limitations
@@ -207,3 +211,36 @@ The adapter passed the batch except for a real exporter behavior: an Event with
 no body arrived as `body: {}`. Empty AnyValue objects are now omitted as absent
 bodies, while malformed non-empty variants still fail. A correlated progress law
 runs directly over the two converted SDK Events.
+
+### 2026-08-19 — Collector round-trip validation
+
+Luan authorized commit `3433993` for the SDK compatibility fix; it was created
+under his Git identity and not pushed. The following work remains uncommitted.
+
+The deterministic SDK batch was sent through the official Collector 0.157.0
+container using an OTLP/HTTP receiver and JSON OTLP/HTTP exporter. The Collector
+removed default zeros and empty arrays and canonicalized a numeric int64 to its
+decimal-string form. The adapter required no branch or fix: direct SDK and
+Collector payloads produce deep-equal traces and skipped-log counts. The
+container was stopped and removed after capture.
+
+### 2026-08-19 — Multi-resource trace correlation
+
+Two independent SDK logger providers represented a checkout API and fulfillment
+worker. They exported deterministic Events with one shared trace ID and distinct
+span IDs through Collector 0.157.0. Its batch processor emitted a single request
+with two resource groups. A law matching both order ID and trace ID passes on the
+capture and fails when only the consequence trace ID changes.
+
+The payload exposed OTLP `flags: 1`, which the adapter previously omitted. Trace
+flags now remain at `otel.flags` after uint32 validation. The fixture, source
+change, tests, and documentation form the authorized Collector milestone.
+
+### 2026-08-19 — Collector milestone publication
+
+Luan explicitly authorized committing the complete reviewed working tree and
+pushing all local `main` progress to GitHub. The snapshot includes Collector
+normalization equivalence, cross-resource trace correlation, trace-flag
+preservation, fixtures, tests, and documentation. The direct push intentionally
+publishes the five post-bootstrap milestones without an intermediate PR. D-010
+resumes after this one-time exception.

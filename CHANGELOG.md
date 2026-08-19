@@ -24,12 +24,14 @@ the package leaves research preview.
 - External API and webhook validation protocol plus an evidence-based adapter
   comparison.
 - Experimental dependency-free `eventlaw/opentelemetry` conversion for OTLP/JSON
-  Events, verified against the official OpenTelemetry protocol fixture.
+  Events, verified against the official protocol fixture, JavaScript SDK, and
+  Collector batches with multiple resources and trace context.
 
 ### Changed
 
 - Replaced repeated progress-obligation scans with a deadline-ordered index.
 - Treat empty OTLP AnyValue bodies emitted by the JavaScript SDK as absent.
+- Preserve validated OTLP trace flags alongside trace and span identifiers.
 - Raised the minimum Node.js version from 20 to 22 after Node 20 reached EOL.
 - Updated GitHub Actions to `checkout@v7` and `setup-node@v7` and CI coverage to
   Node.js 22 and 24.

@@ -1,8 +1,8 @@
 # Adapter strategy
 
 Status: JSONL and structural OTLP/JSON implementations are experimental. OTLP
-has been exercised against both the protocol fixture and a real JavaScript SDK
-export.
+has been exercised against the protocol fixture, a real JavaScript SDK export,
+and the same batch re-exported by a real Collector.
 
 Adapters translate external records into `TraceEvent`. They must not redefine
 law semantics, read the wall clock for the core, or make hidden retention
@@ -89,6 +89,8 @@ The conversion is deliberately explicit:
   body and is omitted;
 - record attributes, resource attributes, and instrumentation scope stay under
   `otel.attributes`, `otel.resource`, and `otel.scope`;
+- `traceId`, `spanId`, and the OTLP trace `flags` stay under `otel`; flags must be
+  a valid uint32 rather than being silently coerced;
 - dotted semantic attribute keys become nested objects so existing matcher paths
   remain readable; ambiguous namespace collisions fail instead of overwriting;
 - input order is preserved. The adapter never silently sorts batches.
@@ -103,6 +105,20 @@ A second fixture was captured from an actual `application/json` request emitted
 by `@opentelemetry/sdk-logs@0.221.0` and
 `@opentelemetry/exporter-logs-otlp-http@0.221.0`. It contains two named Events
 from distinct instrumentation scopes and one ordinary log.
+
+A third fixture passed that SDK request through
+`otel/opentelemetry-collector:0.157.0` using the stable `otlp_http` exporter with
+JSON encoding. The Collector omitted default zero fields and empty arrays, and
+canonicalized numeric `intValue: 0` to `"0"`. Both payloads convert to exactly the
+same trace and skipped-log count.
+
+A fourth fixture uses two independent `LoggerProvider` resources to represent a
+checkout API and a fulfillment worker. Both exporters send to a Collector batch
+processor, which emits one request containing two `resourceLogs`. The Events
+share a valid W3C `traceId`, have distinct `spanId` values, retain sampled
+`flags: 1`, and pass a law that matches both order identity and trace context.
+Changing only the consequence trace ID makes that law fail. This proves
+cross-service correlation without treating service identity as a partition.
 
 This is structural conversion only: protobuf, Collector connections,
 compression, authentication, backpressure, and ordering across requests remain

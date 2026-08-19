@@ -1,0 +1,77 @@
+{
+  "resourceLogs": [
+    {
+      "resource": {
+        "attributes": [
+          { "key": "service.name", "value": { "stringValue": "checkout-api" } },
+          { "key": "service.version", "value": { "stringValue": "2.3.0" } },
+          { "key": "service.namespace", "value": { "stringValue": "commerce" } },
+          { "key": "service.instance.id", "value": { "stringValue": "checkout-1" } },
+          {
+            "key": "deployment.environment.name",
+            "value": { "stringValue": "validation" }
+          }
+        ]
+      },
+      "scopeLogs": [
+        {
+          "scope": { "name": "checkout.events", "version": "2.3.0" },
+          "logRecords": [
+            {
+              "timeUnixNano": "1700000000123456789",
+              "observedTimeUnixNano": "1700000000223456789",
+              "severityNumber": 9,
+              "severityText": "INFO",
+              "body": {},
+              "attributes": [
+                { "key": "order.id", "value": { "stringValue": "order-42" } },
+                { "key": "customer.tier", "value": { "stringValue": "gold" } }
+              ],
+              "flags": 1,
+              "traceId": "4bf92f3577b34da6a3ce929d0e0e4736",
+              "spanId": "00f067aa0ba902b7",
+              "eventName": "order.accepted"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "resource": {
+        "attributes": [
+          { "key": "service.name", "value": { "stringValue": "fulfillment-worker" } },
+          { "key": "service.version", "value": { "stringValue": "4.5.0" } },
+          { "key": "service.namespace", "value": { "stringValue": "commerce" } },
+          { "key": "service.instance.id", "value": { "stringValue": "fulfillment-1" } },
+          {
+            "key": "deployment.environment.name",
+            "value": { "stringValue": "validation" }
+          }
+        ]
+      },
+      "scopeLogs": [
+        {
+          "scope": { "name": "fulfillment.events", "version": "4.5.0" },
+          "logRecords": [
+            {
+              "timeUnixNano": "1700000005987654321",
+              "observedTimeUnixNano": "1700000006100000000",
+              "body": {},
+              "attributes": [
+                { "key": "order.id", "value": { "stringValue": "order-42" } },
+                {
+                  "key": "shipping.carrier.name",
+                  "value": { "stringValue": "parcel-example" }
+                }
+              ],
+              "flags": 1,
+              "traceId": "4bf92f3577b34da6a3ce929d0e0e4736",
+              "spanId": "b7ad6b7169203331",
+              "eventName": "order.shipped"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

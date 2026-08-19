@@ -292,3 +292,72 @@ The fixed payload is retained as a regression fixture with exact SDK versions
 and capture method documented. It is evidence for structural OTLP/JSON
 compatibility, not evidence for Collector networking, protobuf, backpressure, or
 ordering across separate export requests.
+
+## D-023 — Explicit authorization for the SDK-compatibility commit
+
+**Status:** accepted and consumed, 2026-08-19.
+
+Luan explicitly authorized committing the JavaScript SDK compatibility fix and
+starting the Collector validation. Commit `3433993`
+(`fix: accept empty otlp event bodies`) was created with `Luan Taraschi` as both
+author and committer. No push was requested or performed; local `main` became
+four commits ahead of `origin/main`.
+
+This authorization applied to that commit only. D-010 remains the standing rule;
+the Collector validation that followed is unstaged and uncommitted.
+
+## D-024 — Collector normalization must preserve the converted trace
+
+**Status:** accepted, 2026-08-19.
+
+The deterministic JavaScript SDK batch was sent through the official
+`otel/opentelemetry-collector:0.157.0` image, pinned by digest. The Collector used
+an OTLP/HTTP receiver and the stable `otlp_http` exporter with JSON encoding,
+compression disabled, and no processors.
+
+The Collector removed protobuf default values such as zero dropped-attribute
+counts and empty attribute arrays. It also canonicalized the SDK's numeric
+`intValue: 0` to the OTLP/JSON decimal string `"0"`. No business data, Event
+identity, timestamp, resource, or scope changed.
+
+The adapter already accepts both allowed int64 representations and optional
+default fields. The direct SDK request and Collector output therefore must
+convert to deep-equal `OtlpEventConversion` results. This equivalence is now a
+regression test; vendor-specific branches were rejected because no semantic
+difference was observed.
+
+## D-025 — Cross-resource correlation preserves OTLP trace flags
+
+**Status:** accepted experimentally, 2026-08-19.
+
+An application-shaped validation used two independent JavaScript
+`LoggerProvider` resources for `checkout-api` and `fulfillment-worker`. Each
+exported one named Event with explicit valid W3C trace context. Collector
+0.157.0 batched both requests into one JSON export containing two
+`resourceLogs`, preserving a shared trace ID, distinct span IDs, and `flags: 1`.
+
+Resource identity must remain attached to each Event, but it must not become an
+implicit partition: a business law can legitimately correlate progress across
+services. The trigger therefore captures both `order.id` and `otel.traceId`, and
+the consequence must match both. Changing only the consequence trace ID turns
+the report from pass to fail.
+
+The adapter already retained trace and span IDs but silently omitted OTLP
+`flags`. It now preserves the field as `otel.flags` and validates it as uint32.
+This keeps sampled trace context available without interpreting vendor policy or
+adding telemetry dependencies. The harness is deterministic project-generated
+evidence, not a substitute for an anonymized external application payload.
+
+## D-026 — Explicit authorization for the Collector milestone commit and push
+
+**Status:** accepted and consumed, 2026-08-19.
+
+After reviewing the completed Collector normalization and multi-resource trace
+work, Luan explicitly authorized Codex to commit the current milestone and push
+all local `main` progress to GitHub. The commit must use `Luan Taraschi` as both
+author and committer. Direct publication to `origin/main` is intentional; no
+intermediate pull request was requested.
+
+This exception covers exactly the reviewed working tree and its direct push,
+including both previously captured Collector fixtures, trace-flag preservation,
+regression tests, and documentation. D-010 resumes immediately afterward.

@@ -9,6 +9,15 @@ const officialFixture = JSON.parse(
 const sdkFixture = JSON.parse(
   readFileSync(new URL('./fixtures/opentelemetry-sdk-events.json', import.meta.url), 'utf8'),
 )
+const collectorFixture = JSON.parse(
+  readFileSync(new URL('./fixtures/opentelemetry-collector-events.json', import.meta.url), 'utf8'),
+)
+const multiResourceFixture = JSON.parse(
+  readFileSync(
+    new URL('./fixtures/opentelemetry-multi-resource-events.json', import.meta.url),
+    'utf8',
+  ),
+)
 
 describe('OpenTelemetry event adapter', () => {
   test('converts the official OTLP JSON event fixture', () => {
@@ -118,6 +127,57 @@ describe('OpenTelemetry event adapter', () => {
     expect(verifyTrace(trace, laws, { complete: true }).status).toBe('pass')
   })
 
+  test('normalizes Collector JSON to the same trace as the direct SDK export', () => {
+    expect(eventsFromOtlpJson(collectorFixture)).toEqual(eventsFromOtlpJson(sdkFixture))
+  })
+
+  test('correlates events across resources through trace context', () => {
+    const { trace, skippedLogRecords } = eventsFromOtlpJson(multiResourceFixture)
+    const laws = defineLaws({
+      acceptedOrdersShipOnTheSameTrace: after(
+        event('order.accepted')
+          .capture('orderId', 'otel.attributes.order.id')
+          .capture('traceId', 'otel.traceId'),
+      )
+        .eventually(
+          event('order.shipped')
+            .equals('otel.attributes.order.id', ref('orderId'))
+            .equals('otel.traceId', ref('traceId')),
+        )
+        .within(6_000),
+    })
+
+    expect(skippedLogRecords).toBe(0)
+    expect(trace).toHaveLength(2)
+    expect(trace[0]).toMatchObject({
+      type: 'order.accepted',
+      otel: {
+        traceId: '4bf92f3577b34da6a3ce929d0e0e4736',
+        spanId: '00f067aa0ba902b7',
+        flags: 1,
+        resource: { service: { name: 'checkout-api', instance: { id: 'checkout-1' } } },
+      },
+    })
+    expect(trace[1]).toMatchObject({
+      type: 'order.shipped',
+      otel: {
+        traceId: '4bf92f3577b34da6a3ce929d0e0e4736',
+        spanId: 'b7ad6b7169203331',
+        flags: 1,
+        resource: {
+          service: { name: 'fulfillment-worker', instance: { id: 'fulfillment-1' } },
+        },
+      },
+    })
+    expect(verifyTrace(trace, laws, { complete: true }).status).toBe('pass')
+
+    const brokenFixture = structuredClone(multiResourceFixture)
+    brokenFixture.resourceLogs[1].scopeLogs[0].logRecords[0].traceId =
+      '11111111111111111111111111111111'
+    const brokenTrace = eventsFromOtlpJson(brokenFixture).trace
+    expect(verifyTrace(brokenTrace, laws, { complete: true }).status).toBe('fail')
+  })
+
   test('reports ordinary log records instead of silently treating them as events', () => {
     expect(
       eventsFromOtlpJson({
@@ -182,6 +242,11 @@ describe('OpenTelemetry event adapter', () => {
         ],
       },
       'namespace collision',
+    ],
+    [
+      'invalid trace flags',
+      { eventName: 'job.finished', timeUnixNano: '1000000', flags: -1 },
+      'expected a uint32',
     ],
   ])('rejects %s with an OTLP path', (_name, logRecord, message) => {
     const payload = { resourceLogs: [{ scopeLogs: [{ logRecords: [logRecord] }] }] }
