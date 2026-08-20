@@ -1,6 +1,6 @@
 {
   "name": "eventlaw",
-  "version": "0.0.0",
+  "version": "0.1.0-beta.1",
   "description": "Executable temporal laws for event-driven TypeScript systems.",
   "author": "Luan Taraschi",
   "keywords": [
@@ -32,6 +32,8 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "check": "npm run typecheck && npm run test && npm run build",
+    "package:smoke": "node scripts/package-smoke.mjs",
+    "release:check": "npm run format:check && npm run check && npm run package:smoke && npm audit --audit-level=low",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "bench:progress": "tsx bench/progress.ts",
@@ -73,6 +75,9 @@
     "LICENSE"
   ],
   "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "overrides": {
     "esbuild": "^0.28.2"
   },

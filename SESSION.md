@@ -10,19 +10,23 @@ small, readable counterexample.
 
 ## Current phase
 
-Vertical slices 1 through 4 are complete. The project is now validating API
-readability with external users and deciding the first integration adapters.
+Vertical slices 1 through 4 are complete. The prepared beta is now entering
+maintainer dogfood in owned projects before external API review.
 
 ## Current status
 
 - Name checked and provisionally changed from `tracecheck` to `eventlaw`.
 - Package is intentionally private and unpublished.
+- The prepared package version is `0.1.0-beta.1`; `private: true` remains the
+  publication guard until Luan explicitly removes it.
 - Local Git repository initialized on `main`; private remote created at
   `https://github.com/luantaraschi/eventlaw` and linked as `origin`.
 - Initial commit `0882d88` and the five later milestones through the
   multi-resource Collector validation are on `origin/main`. Luan explicitly
   authorized every commit and the direct push; author and committer are
-  `Luan Taraschi`. All exceptions are consumed.
+  `Luan Taraschi`.
+- Luan now delegates Git operations when he explicitly authorizes the current
+  scope. Commits retain his configured identity and never add Codex attribution.
 - Semantic decisions and initial API are documented.
 - Offline verifier implements progress, exclusion, and uniqueness laws.
 - The published `lull` reducer is exercised as the first real integration.
@@ -63,10 +67,23 @@ readability with external users and deciding the first integration adapters.
   atomicity, replay, restart, and failure requirements come from an operator.
 - Node.js 22 is now the minimum; CI is prepared for Node 22/24 with official v7
   GitHub Actions.
-- Package dry-run: 36 files, 110.2 kB compressed, 405.6 kB unpacked. Package
+- Package dry-run: 36 files, 110.9 kB compressed, 406.9 kB unpacked. Package
   remains private.
-- The Collector and multi-resource milestone is committed and pushed; the
-  working tree is expected to be clean at handoff.
+- Release readiness is now prepared locally: clean-consumer ESM, CommonJS, type,
+  and subpath smoke tests; tag-driven npm OIDC workflow; public stability and
+  release policies; Dependabot; and a public-only CodeQL workflow.
+- Seven seed issues exist in the private GitHub repository: three documentation
+  `good first issue` tasks, two design proposals, one performance investigation,
+  and one external OTLP validation task.
+- GitHub dependency alerts and automated security fixes are enabled. Ruleset
+  `Protect main after public beta` exists but is disabled so it cannot affect the
+  current private workflow.
+- Release verification passes: 69 tests, strict types, ESM/CJS/declarations,
+  formatting, zero audit findings, actionlint 1.7.12, and clean-consumer package
+  imports. The complete gate was rerun on 2026-08-20 after the dogfood plan and
+  before its authorized direct publication.
+- The beta-readiness and dogfood-planning milestone is committed and pushed
+  directly to `main` under Luan's explicit authorization.
 - A theme-aware SVG README hero and visual-identity guide are drafted after that
   push. The first diagrammatic direction was rejected; the current draft is a
   wordmark-only display approved by Luan. The README uses transparent PNG
@@ -75,6 +92,8 @@ readability with external users and deciding the first integration adapters.
 
 ## Validation gates
 
+- [ ] The packed candidate works in `lull` and one other maintainer-owned project.
+- [ ] Generated, recorded, and live modes are exercised across those consumers.
 - [ ] Three real `lull` laws are implemented; readability still needs external review.
 - [x] A planted bug reduces to a timeline of at most five events.
 - [x] The same law AST runs offline and over an async event stream.
@@ -83,15 +102,20 @@ readability with external users and deciding the first integration adapters.
 
 ## Next actions
 
-1. Put the README example in front of two TypeScript developers.
-2. Validate the webhook example with someone who operates webhook ingestion.
-3. Record the anonymized results using `docs/validation.md`; change the API or
+1. Install the packed candidate into `lull` and one other owned event-driven
+   project using `docs/dogfood.md`.
+2. Record at least three real laws across generated, recorded, and live modes;
+   fix or explicitly accept every blocker.
+3. Put the README example in front of two TypeScript developers.
+4. Validate the webhook example with someone who operates webhook ingestion.
+5. Record the anonymized results using `docs/validation.md`; change the API or
    README only when a misunderstanding repeats.
-4. Validate the OTLP mapping against an anonymized external application export;
+6. Validate the OTLP mapping against an anonymized external application export;
    the deterministic two-service harness is complete.
-5. Ask whether truncating nanoseconds, nesting semantic attribute keys, and
+7. Ask whether truncating nanoseconds, nesting semantic attribute keys, and
    matching on trace IDs fit how an operator would write laws.
-6. Only after external validation, decide whether to make the repository public.
+8. Only after the three human sessions, decide whether to make the repository
+   public and perform the first interactive npm publication in `docs/releasing.md`.
 
 ## Known limitations
 

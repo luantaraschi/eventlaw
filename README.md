@@ -27,6 +27,20 @@ traces, and monitor live events with the same serializable definition.
 > `eventlaw` is a research preview. The repository is ready for design partners
 > and experiments, but the package is not published yet.
 
+## Installation
+
+The first public candidate is `0.1.0-beta.1`, but it is intentionally blocked
+from npm while it is tested in maintainer-owned projects and then reviewed
+externally. After publication, the beta channel will install with:
+
+```bash
+npm install eventlaw@beta
+```
+
+Until then, clone the repository and use the commands under [Try it locally](#try-it-locally).
+The supported runtimes and stability of each entry point are documented in the
+[public contract](docs/stability.md).
+
 ## The problem
 
 The same production rule usually exists three times:
@@ -288,12 +302,16 @@ The current vertical slice includes:
 
 The full suite has 69 tests across 10 files, including 1,250 generated
 differential traces. TypeScript types, ESM, CommonJS, declarations, formatting,
-and the package tarball are checked locally and in CI.
+and the package tarball are checked locally and in CI. A clean-consumer smoke
+test also installs the tarball and imports every entry point through both module
+systems.
 
-Before a public package release, the API still needs feedback from TypeScript
-developers who operate event-driven systems. The first performance decision is
-documented in [benchmarks](docs/benchmarks.md), including the quadratic baseline
-that justified the deadline index.
+The current validation step installs the packed candidate in maintainer-owned
+projects before putting the API in front of external TypeScript developers. This
+dogfood produces integration evidence but does not replace independent feedback.
+The first performance decision is documented in
+[benchmarks](docs/benchmarks.md), including the quadratic baseline that justified
+the deadline index.
 
 ## Design constraints
 
@@ -309,6 +327,8 @@ and their rationale are recorded in [DECISIONS.md](DECISIONS.md).
 The [adapter strategy](docs/adapters.md) records the JSONL and OpenTelemetry
 mapping contracts and what must be learned before Kafka or durable-state
 integration.
+The [release roadmap](docs/roadmap.md) separates the beta gate from work that can
+be contributed after launch.
 
 ## Contributing
 
@@ -318,6 +338,8 @@ and write the rule once in plain language.
 
 The [external validation protocol](docs/validation.md) defines the comprehension
 and webhook-operator sessions required before publication.
+The [maintainer dogfood protocol](docs/dogfood.md) defines what to test first in
+owned projects and how to record evidence without turning assumptions into facts.
 
 [CONTRIBUTING.md](CONTRIBUTING.md) covers setup, tests, semantic changes, and pull
 request expectations. Participation is governed by the

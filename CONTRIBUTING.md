@@ -25,6 +25,8 @@ npm run check
 | `npm run typecheck`        | Checks the public and internal TypeScript types |
 | `npm run build`            | Builds ESM, CommonJS, and declarations          |
 | `npm run check`            | Runs types, tests, and build                    |
+| `npm run package:smoke`    | Installs and imports the packed public package  |
+| `npm run release:check`    | Runs every local release gate                   |
 | `npm run format`           | Formats the repository with Prettier            |
 | `npm run format:check`     | Runs the same formatting check as CI            |
 | `npm run bench:progress`   | Measures insertion with open obligations        |
@@ -102,9 +104,13 @@ not real timers.
 
 ## Releasing
 
-Maintainer only. The package is not published while the API remains a research
-preview. A release workflow and provenance policy will be added only after the
-public contract has external validation.
+Maintainer only. The package remains blocked while the API is a research
+preview. The automated workflow, trusted-publishing contract, first-publication
+exception, tag convention, and rollback guidance live in
+[docs/releasing.md](docs/releasing.md).
+
+Contributors should not change package versions or create release tags in pull
+requests unless a maintainer explicitly asks for a release preparation change.
 
 ## Code of conduct
 

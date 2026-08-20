@@ -2,8 +2,12 @@
 
 ## Supported versions
 
-`eventlaw` is an unpublished research preview. No version currently receives a
-formal security-support guarantee.
+`eventlaw` is currently an unpublished research preview, so no published version
+receives a formal security-support guarantee yet.
+
+After the first beta, only the latest `0.1.x` prerelease will receive security
+fixes. Older prereleases may be deprecated rather than patched. This policy will
+be revised before a stable `1.0.0` release.
 
 ## Reporting a vulnerability
 

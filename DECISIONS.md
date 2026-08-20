@@ -82,7 +82,7 @@ what changed, what passed, what remains risky, and what should happen next.
 
 ## D-010 — Commits belong exclusively to Luan
 
-**Status:** accepted, 2026-08-19.
+**Status:** superseded by D-035, 2026-08-20.
 
 Codex may inspect and edit the working tree, run verification, document changes,
 and suggest a commit message. It must never execute `git commit`, amend a commit,
@@ -458,3 +458,62 @@ authorized committing and pushing the complete revision. The commit must use
 The authorized scope includes the site palette and layout correction, favicon,
 social card, theme metadata, design system, validation record, and continuity
 documentation. D-010 resumes immediately after this publication.
+
+## D-033 — Prepare a beta candidate without bypassing publication gates
+
+**Status:** accepted, 2026-08-19.
+
+The repository identifies the prepared candidate as `0.1.0-beta.1` while
+retaining `private: true`. The root and `fast-check` entry points have beta
+stability; JSONL and OpenTelemetry mappings remain experimental until external
+input validates their boundaries. Node.js 22 and 24, ESM, CommonJS, and
+TypeScript 5.6 or newer form the initial compatibility claim.
+
+A release gate must install the generated tarball in a clean consumer and verify
+every entry point through ESM, CommonJS, and strict TypeScript. This protects the
+published artifact rather than only the repository build.
+
+The npm package must exist before trusted publishing can be configured. The
+first version therefore requires Luan's interactive publication with 2FA after
+the human validation gate and public-repository decision. Later versions use the
+tag-driven `release.yml` workflow with GitHub Actions OIDC and automatic
+provenance. No long-lived npm publish token belongs in repository secrets.
+
+Publication remains a separate explicit act. Preparing metadata, CI, docs,
+issues, and a disabled ruleset does not authorize removing `private: true`,
+making the repository public, publishing npm, creating a tag, or creating a Git
+commit.
+
+## D-034 — Maintainer dogfood precedes external validation
+
+**Status:** accepted, 2026-08-20.
+
+Luan chose to install the prepared beta candidate in his own projects before
+running the two TypeScript comprehension sessions and webhook-operator session.
+The first consumers are `lull` and one other owned event-driven project. Across
+them, generated, recorded, and live execution should exercise at least three
+genuine laws through the packed artifact rather than Eventlaw source imports.
+
+This changes sequence, not evidence standards. Dogfood can reveal package,
+mapping, semantic, and operational problems, but it cannot prove that an
+unfamiliar developer understands the API. External sessions remain deferred and
+unchecked; the repository and npm package remain private and unpublished until
+that later gate or a separate explicit decision changes it.
+
+## D-035 — Luan may delegate Git operations explicitly
+
+**Status:** accepted, 2026-08-20.
+
+Luan replaced the blanket prohibition on Codex-created commits. Git and GitHub
+mutations remain opt-in: Codex may stage, commit, amend, push, or create a PR only
+when Luan explicitly authorizes the current scope. Before acting, Codex must
+inspect the exact diff and avoid unrelated changes.
+
+Authorized commits use the repository's configured `Luan Taraschi` identity and
+must not add Codex attribution or a generated co-author. This policy delegates
+command execution; it does not authorize npm publication, visibility changes,
+announcements, or other external actions that Luan has not requested.
+
+For the current milestone, Luan explicitly authorized staging the complete
+reviewed beta-readiness and dogfood-planning tree, committing it, and pushing it
+directly to `origin/main`.

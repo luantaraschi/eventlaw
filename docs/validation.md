@@ -1,5 +1,9 @@
 # External validation protocol
 
+Maintainer dogfood now runs first using [dogfood.md](dogfood.md). It is useful
+integration evidence, but it does not satisfy any external comprehension or
+operator gate below.
+
 Status: ready to run. No sessions have been completed yet.
 
 The goal is not to ask whether people like `eventlaw`. The goal is to observe

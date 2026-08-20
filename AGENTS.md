@@ -9,9 +9,10 @@ Read these files completely before making changes:
 
 Project constraints:
 
-- Codex must never create or amend a Git commit, directly or through another
-  tool. Only Luan authors commits. Leave changes unstaged and provide a suggested
-  commit message when useful.
+- Do not stage, commit, amend, push, or create a PR by default. Codex may perform
+  those actions only when Luan explicitly authorizes them for the current scope.
+  Inspect the exact diff first, preserve the configured `Luan Taraschi` Git
+  identity, and never add Codex attribution or a generated co-author.
 - The package stays `private: true` until the user explicitly approves publication.
 - The main `eventlaw` entry has no runtime dependencies.
 - `fast-check` remains optional and isolated at `eventlaw/fast-check`.

@@ -10,6 +10,10 @@ the package leaves research preview.
 
 ### Added
 
+- Release-candidate metadata for `0.1.0-beta.1`, an installed-package smoke test,
+  npm trusted-publishing workflow, CodeQL workflow, and Dependabot configuration.
+- Public stability, release, maintainer-dogfood, and contribution-roadmap
+  documents.
 - Theme-aware README wordmark and documented visual identity.
 - Serializable event matchers with constraints, captures, and references.
 - Progress, exclusion, and uniqueness laws with partitioned verification.
