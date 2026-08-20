@@ -81,9 +81,9 @@ maintainer dogfood and external API review remain open.
 - Seven seed issues exist in the public GitHub repository: three documentation
   `good first issue` tasks, two design proposals, one performance investigation,
   and one external OTLP validation task.
-- GitHub dependency alerts and automated security fixes are enabled. Ruleset
-  `Protect main after public beta` exists but remains disabled during the first
-  release preparation.
+- GitHub dependency alerts, automated security fixes, secret scanning, push
+  protection, private vulnerability reporting, and CodeQL are enabled. Ruleset
+  `Protect main after public beta` protects `main` after the release handoff.
 - Release verification passes: 69 tests, strict types, ESM/CJS/declarations,
   formatting, zero audit findings, actionlint 1.7.12, and clean-consumer package
   imports. The complete gate was rerun on 2026-08-20 after the dogfood plan and
