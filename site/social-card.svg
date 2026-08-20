@@ -2,14 +2,14 @@
   <title id="title">eventlaw</title>
   <desc id="desc">Executable temporal laws for event-driven TypeScript systems.</desc>
   <defs>
-    <linearGradient id="law" x1="450" y1="220" x2="760" y2="340" gradientUnits="userSpaceOnUse"><stop stop-color="#a39aff"/><stop offset=".55" stop-color="#7969ff"/><stop offset="1" stop-color="#43d7c5"/></linearGradient>
-    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(963 86) rotate(127) scale(530 710)" gradientUnits="userSpaceOnUse"><stop stop-color="#143b34"/><stop offset="1" stop-color="#071412"/></radialGradient>
+    <linearGradient id="law" x1="450" y1="220" x2="760" y2="340" gradientUnits="userSpaceOnUse"><stop stop-color="#ad9cff"/><stop offset=".55" stop-color="#8068ff"/><stop offset="1" stop-color="#56a8ff"/></linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(963 86) rotate(127) scale(530 710)" gradientUnits="userSpaceOnUse"><stop stop-color="#18213d"/><stop offset="1" stop-color="#080a12"/></radialGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#glow)"/>
-  <path d="M86 82h1028M86 548h1028" stroke="#27413a"/>
-  <circle cx="99" cy="97" r="5" fill="#50e3c2"/>
-  <text x="86" y="102" fill="#9db0aa" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="3">TEMPORAL CONTRACTS FOR TYPESCRIPT</text>
+  <path d="M86 82h1028M86 548h1028" stroke="#252b3d"/>
+  <circle cx="99" cy="97" r="5" fill="#56a8ff"/>
+  <text x="86" y="102" fill="#a6aec2" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="3">TEMPORAL CONTRACTS FOR TYPESCRIPT</text>
   <text x="80" y="340" fill="#eef8f4" font-family="Arial Black, Arial, sans-serif" font-size="146" font-weight="900" letter-spacing="-10">event<tspan fill="url(#law)">law</tspan></text>
-  <text x="88" y="430" fill="#b9c9c4" font-family="Arial, Helvetica, sans-serif" font-size="36">Write the rule once. Run it wherever events happen.</text>
-  <text x="88" y="580" fill="#6f8981" font-family="Consolas, monospace" font-size="19">github.com/luantaraschi/eventlaw</text>
+  <text x="88" y="430" fill="#c4cad8" font-family="Arial, Helvetica, sans-serif" font-size="36">Write the rule once. Run it wherever events happen.</text>
+  <text x="88" y="580" fill="#7a849d" font-family="Consolas, monospace" font-size="19">github.com/luantaraschi/eventlaw</text>
 </svg>

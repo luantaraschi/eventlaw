@@ -19,7 +19,9 @@ instrument-like. It should feel like a trustworthy developer tool rather than a
 dashboard template or a marketing landing-page kit.
 
 - Use asymmetry, rule lines, state labels, and a single diagnostic surface.
-- Use the approved violet-to-teal `law` gradient as a signal, not as decoration.
+- Use a violet-to-blue `law` gradient as a signal, not as decoration. The website
+  adapts the repository wordmark toward blue so the dark interface stays neutral;
+  green is reserved for the semantic pass state.
 - Prefer square or lightly rounded geometry. Avoid floating glass cards, large
   shadows, decorative blobs, and repeated feature-card grids.
 - The signature interaction is the Trace Lab, which executes the repository's
@@ -37,14 +39,15 @@ may follow the operating-system preference or the visitor's saved choice.
 
 | Role          | Dark      | Light     |
 | ------------- | --------- | --------- |
-| Canvas        | `#071412` | `#f4f8f6` |
-| Raised canvas | `#0b1d1a` | `#ffffff` |
-| Code surface  | `#06100f` | `#eaf1ee` |
-| Strong text   | `#eef8f4` | `#10201c` |
-| Muted text    | `#9db0aa` | `#53645f` |
-| Hairline      | `#27413a` | `#c8d5d0` |
-| Violet        | `#8f70ff` | `#6347db` |
-| Teal          | `#50e3c2` | `#087d69` |
+| Canvas        | `#080a12` | `#f5f6fa` |
+| Raised canvas | `#0f1320` | `#ffffff` |
+| Code surface  | `#070911` | `#eef0f6` |
+| Strong text   | `#f4f6ff` | `#161827` |
+| Muted text    | `#9aa3b8` | `#5e6478` |
+| Faint data    | `#8992aa` | `#5e6578` |
+| Hairline      | `#252b3d` | `#d7dae5` |
+| Violet        | `#8068ff` | `#6048d8` |
+| Blue accent   | `#56a8ff` | `#2367c9` |
 | Pass          | `#58d68d` | `#167343` |
 | Fail          | `#ff7c72` | `#b92d2b` |
 | Pending       | `#f4c95d` | `#8a5a00` |
@@ -78,8 +81,9 @@ or pending through color alone; pair color with a label and symbol.
    specimen on the right. The fold must preview the Trace Lab.
 3. Trace Lab: one law, three scenarios, input events, report, and minimized
    counterexample. This is the primary proof, not an ornamental mock-up.
-4. A connected horizontal rail for Generated / Recorded / Live. It must read as
-   one definition travelling through three modes, not three unrelated cards.
+4. A connected horizontal rail for Generated / Recorded / Live. At desktop the
+   connection runs through a dedicated marker row above the labels; it must never
+   cross text. At narrower widths it becomes a vertical rail beside the labels.
 5. Portable-definition section with real TypeScript and a concise JSON-safe AST
    explanation.
 6. Adapter and research-preview boundaries.

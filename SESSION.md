@@ -294,3 +294,19 @@ layouts, zero horizontal page overflow, zero browser-console errors, and zero
 axe-core 4.13 violations. The Pages workflow, README link, and package homepage
 are ready for the authorized commit, push, GitHub Pages enablement, and live URL
 verification.
+
+### 2026-08-19 — Neutral palette and typography correction
+
+Luan's live-site captures exposed two design defects: the dark theme carried a
+green cast that fought the violet/blue wordmark, and the three-mode connector ran
+through its titles. The local revision moves the connector to a marker-only row,
+opens large-heading tracking and line height, and replaces the site palette with
+neutral blue-graphite surfaces plus violet and blue accents. Green is now reserved
+for the pass status.
+
+The site-specific design system, favicon, browser theme colors, and social-card
+source were updated together. README wordmark assets were intentionally preserved.
+Browser QA covers 320/598/768/1024/1253/1440 px with no horizontal overflow,
+zero console errors, and zero axe-core violations in light and dark modes. Luan
+then authorized committing the complete correction and pushing it directly to
+`origin/main`, with his Git identity retained as author and committer.

@@ -427,3 +427,34 @@ deployment verification. Author and committer must both remain `Luan Taraschi`.
 The authorized scope is the reviewed static site, real Trace Lab bundle entry,
 design system, social assets, README/package links, Pages workflow, validation
 notes, and continuity records. D-010 resumes immediately after publication.
+
+## D-031 — The site palette is neutral graphite, violet, and blue
+
+**Status:** accepted, 2026-08-19.
+
+Luan found that the green cast of the original dark canvas conflicted with the
+blue and violet identity. The website therefore replaces blue-green backgrounds,
+surfaces, rules, and accents with neutral blue-graphite surfaces plus violet and
+blue signals. Green remains only where it communicates a passing verification.
+
+The Generated / Recorded / Live connector also moves to its own marker row on
+wide layouts. Previously it shared the title baseline and visibly crossed the
+three labels. Large headings use less negative tracking and a slightly more open
+line height so their glyphs remain distinct at intermediate and mobile widths.
+
+This is a website-specific evolution. The previously approved transparent README
+wordmark assets remain unchanged until Luan explicitly requests a repository-wide
+brand revision.
+
+## D-032 — Explicit authorization for the palette correction commit and push
+
+**Status:** accepted for the current publication, 2026-08-19.
+
+After reviewing the neutral palette and text-overlap correction, Luan explicitly
+authorized committing and pushing the complete revision. The commit must use
+`Luan Taraschi` as both author and committer and may be published directly to
+`origin/main`, matching the established repository workflow.
+
+The authorized scope includes the site palette and layout correction, favicon,
+social card, theme metadata, design system, validation record, and continuity
+documentation. D-010 resumes immediately after this publication.

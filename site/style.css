@@ -1,25 +1,25 @@
 :root {
   color-scheme: dark;
-  --canvas: #071412;
-  --canvas-raised: #0b1d1a;
-  --canvas-code: #06100f;
-  --text: #eef8f4;
-  --text-soft: #becdc8;
-  --muted: #9db0aa;
-  --faint: #6f8981;
-  --line: #27413a;
-  --line-strong: #3d5b52;
-  --violet: #a39aff;
-  --violet-strong: #8f70ff;
-  --teal: #50e3c2;
-  --teal-ink: #052d27;
+  --canvas: #080a12;
+  --canvas-raised: #0f1320;
+  --canvas-code: #070911;
+  --text: #f4f6ff;
+  --text-soft: #cbd0df;
+  --muted: #9aa3b8;
+  --faint: #8992aa;
+  --line: #252b3d;
+  --line-strong: #3b4563;
+  --violet: #ad9cff;
+  --violet-strong: #8068ff;
+  --accent: #56a8ff;
+  --accent-ink: #07101f;
   --pass: #58d68d;
   --fail: #ff7c72;
   --pending: #f4c95d;
-  --header: rgb(7 20 18 / 86%);
-  --selection: rgb(80 227 194 / 24%);
-  --code-keyword: #b9a7ff;
-  --code-string: #74e4cb;
+  --header: rgb(8 10 18 / 88%);
+  --selection: rgb(128 104 255 / 24%);
+  --code-keyword: #bdaeff;
+  --code-string: #75baff;
   --radius: 8px;
   --radius-large: 18px;
   --max-width: 1180px;
@@ -29,26 +29,26 @@
 
 html[data-theme='light'] {
   color-scheme: light;
-  --canvas: #f4f8f6;
+  --canvas: #f5f6fa;
   --canvas-raised: #ffffff;
-  --canvas-code: #eaf1ee;
-  --text: #10201c;
-  --text-soft: #30443e;
-  --muted: #53645f;
-  --faint: #70817b;
-  --line: #c8d5d0;
-  --line-strong: #a8bbb4;
-  --violet: #6347db;
-  --violet-strong: #6347db;
-  --teal: #087d69;
-  --teal-ink: #ecfff9;
+  --canvas-code: #eef0f6;
+  --text: #161827;
+  --text-soft: #383d52;
+  --muted: #5e6478;
+  --faint: #5e6578;
+  --line: #d7dae5;
+  --line-strong: #b8bfd1;
+  --violet: #6048d8;
+  --violet-strong: #6048d8;
+  --accent: #2367c9;
+  --accent-ink: #f7f9ff;
   --pass: #167343;
   --fail: #b92d2b;
   --pending: #8a5a00;
-  --header: rgb(244 248 246 / 88%);
+  --header: rgb(245 246 250 / 90%);
   --selection: rgb(99 71 219 / 16%);
   --code-keyword: #6347db;
-  --code-string: #087d69;
+  --code-string: #185fae;
 }
 
 * {
@@ -95,7 +95,7 @@ button {
 }
 
 :focus-visible {
-  outline: 3px solid var(--teal);
+  outline: 3px solid var(--accent);
   outline-offset: 4px;
 }
 
@@ -107,8 +107,8 @@ button {
   padding: 10px 14px;
   transform: translateY(-160%);
   border-radius: 4px;
-  background: var(--teal);
-  color: var(--teal-ink);
+  background: var(--accent);
+  color: var(--accent-ink);
   font-weight: 750;
 }
 
@@ -149,7 +149,7 @@ button {
 
 .wordmark span:last-child,
 h1 span {
-  background: linear-gradient(110deg, var(--violet), var(--violet-strong) 48%, var(--teal));
+  background: linear-gradient(110deg, var(--violet), var(--violet-strong) 48%, var(--accent));
   background-clip: text;
   color: transparent;
 }
@@ -171,7 +171,7 @@ nav a,
 nav a:hover,
 .github-link:hover,
 .text-link:hover {
-  color: var(--teal);
+  color: var(--accent);
 }
 
 .header-actions {
@@ -251,7 +251,7 @@ footer {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    color-mix(in srgb, var(--teal) 9%, transparent),
+    color-mix(in srgb, var(--accent) 9%, transparent),
     transparent 65%
   );
   content: '';
@@ -263,7 +263,7 @@ footer {
   align-items: center;
   gap: 9px;
   margin: 0 0 20px;
-  color: var(--teal);
+  color: var(--accent);
   font-family: var(--mono);
   font-size: 12px;
   font-weight: 750;
@@ -276,8 +276,8 @@ footer {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--teal);
-  box-shadow: 0 0 0 5px color-mix(in srgb, var(--teal) 13%, transparent);
+  background: var(--accent);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 13%, transparent);
 }
 
 h1,
@@ -287,13 +287,18 @@ p {
   text-wrap: pretty;
 }
 
+h1,
+h2 {
+  text-wrap: balance;
+}
+
 h1 {
   max-width: 850px;
   margin: 0;
   font-size: clamp(3rem, 6.25vw, 5.45rem);
   font-weight: 760;
-  letter-spacing: -0.065em;
-  line-height: 0.98;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
 }
 
 h1 span {
@@ -343,12 +348,12 @@ h1 span {
 }
 
 .button-primary {
-  background: var(--teal);
-  color: var(--teal-ink);
+  background: var(--accent);
+  color: var(--accent-ink);
 }
 
 .button-primary:hover {
-  background: color-mix(in srgb, var(--teal) 88%, white);
+  background: color-mix(in srgb, var(--accent) 88%, white);
 }
 
 .button-secondary {
@@ -408,7 +413,7 @@ h1 span {
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, var(--violet), var(--teal));
+  background: linear-gradient(90deg, var(--violet), var(--accent));
   content: '';
 }
 
@@ -429,7 +434,7 @@ h1 span {
   display: flex;
   align-items: center;
   gap: 7px;
-  color: var(--teal);
+  color: var(--accent);
 }
 
 .live-label i {
@@ -549,8 +554,8 @@ h2 {
   margin: 0;
   font-size: clamp(2.15rem, 4.6vw, 4rem);
   font-weight: 730;
-  letter-spacing: -0.055em;
-  line-height: 1.03;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
 }
 
 .section-intro > p:last-child,
@@ -605,7 +610,7 @@ h2 {
 .scenario-tabs button[aria-selected='true'] {
   border-color: var(--line);
   background: var(--canvas-code);
-  color: var(--teal);
+  color: var(--accent);
 }
 
 .copy-button {
@@ -635,7 +640,7 @@ h2 {
 }
 
 .token-function {
-  color: var(--teal);
+  color: var(--accent);
 }
 
 .token-string,
@@ -764,13 +769,13 @@ h2 {
 
 .run-button {
   justify-content: space-between;
-  border-color: var(--teal);
+  border-color: var(--accent);
   background: transparent;
-  color: var(--teal);
+  color: var(--accent);
 }
 
 .run-button:hover {
-  background: color-mix(in srgb, var(--teal) 8%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
 }
 
 .run-button[aria-busy='true'] {
@@ -836,6 +841,10 @@ h2 {
   max-width: 750px;
 }
 
+.section-intro.compact h2 {
+  max-width: 18ch;
+}
+
 .mode-rail {
   position: relative;
   display: grid;
@@ -849,18 +858,16 @@ h2 {
 .mode-rail::before {
   position: absolute;
   top: 21px;
-  right: 11%;
-  left: 11%;
+  right: calc(33.333% - 22px);
+  left: 22px;
   height: 1px;
-  background: linear-gradient(90deg, var(--violet), var(--teal));
+  background: linear-gradient(90deg, var(--violet), var(--accent));
   content: '';
 }
 
 .mode-rail li {
   position: relative;
-  display: grid;
-  grid-template-columns: 44px 1fr;
-  gap: 18px;
+  display: block;
   padding-right: 40px;
 }
 
@@ -874,13 +881,13 @@ h2 {
   border: 1px solid var(--line-strong);
   border-radius: 50%;
   background: var(--canvas);
-  color: var(--teal);
+  color: var(--accent);
   font-family: var(--mono);
   font-size: 10px;
 }
 
 .mode-rail h3 {
-  margin: 5px 0 8px;
+  margin: 22px 0 8px;
   font-size: 18px;
 }
 
@@ -913,7 +920,7 @@ h2 {
 
 .check-list span {
   margin-right: 9px;
-  color: var(--teal);
+  color: var(--accent);
 }
 
 .ast-window {
@@ -971,7 +978,7 @@ h2 {
 }
 
 .adapter-list i {
-  color: var(--teal);
+  color: var(--accent);
   font-style: normal;
 }
 
@@ -1001,7 +1008,7 @@ h2 {
   display: inline-flex;
   gap: 12px;
   margin-top: 28px;
-  color: var(--teal);
+  color: var(--accent);
   font-weight: 750;
 }
 
@@ -1078,10 +1085,19 @@ footer a:not(.wordmark) {
   }
   .mode-rail::before {
     top: 22px;
+    right: auto;
     bottom: 22px;
     left: 21px;
     width: 1px;
     height: auto;
+  }
+  .mode-rail li {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 18px;
+  }
+  .mode-rail h3 {
+    margin: 5px 0 8px;
   }
   .portable-section,
   .adapters-section {

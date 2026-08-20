@@ -251,7 +251,7 @@ function applyTheme(theme: 'dark' | 'light'): void {
   localStorage.setItem('eventlaw-theme', theme)
   themeToggle.setAttribute('aria-label', theme === 'dark' ? 'Use light theme' : 'Use dark theme')
   const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]')
-  themeColor?.setAttribute('content', theme === 'dark' ? '#071412' : '#f4f8f6')
+  themeColor?.setAttribute('content', theme === 'dark' ? '#080a12' : '#f5f6fa')
 }
 
 themeToggle.addEventListener('click', () => {
