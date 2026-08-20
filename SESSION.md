@@ -25,8 +25,9 @@ maintainer dogfood in owned projects before external API review.
   multi-resource Collector validation are on `origin/main`. Luan explicitly
   authorized every commit and the direct push; author and committer are
   `Luan Taraschi`.
-- Luan now delegates Git operations when he explicitly authorizes the current
-  scope. Commits retain his configured identity and never add Codex attribution.
+- Luan delegates routine commands and repository operations to Codex by default;
+  requested work includes its normal staging, commits, pushes, and PR handling.
+  Commits retain his configured identity and never add Codex attribution.
 - Semantic decisions and initial API are documented.
 - Offline verifier implements progress, exclusion, and uniqueness laws.
 - The published `lull` reducer is exercised as the first real integration.

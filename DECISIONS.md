@@ -502,7 +502,7 @@ that later gate or a separate explicit decision changes it.
 
 ## D-035 — Luan may delegate Git operations explicitly
 
-**Status:** accepted, 2026-08-20.
+**Status:** superseded by D-036, 2026-08-20.
 
 Luan replaced the blanket prohibition on Codex-created commits. Git and GitHub
 mutations remain opt-in: Codex may stage, commit, amend, push, or create a PR only
@@ -517,3 +517,18 @@ announcements, or other external actions that Luan has not requested.
 For the current milestone, Luan explicitly authorized staging the complete
 reviewed beta-readiness and dogfood-planning tree, committing it, and pushing it
 directly to `origin/main`.
+
+## D-036 — Codex owns routine repository operations
+
+**Status:** accepted, 2026-08-20.
+
+Luan does not want routine terminal work delegated back to him. When a requested
+task normally requires commands, staging, commits, pushes, or PR creation, Codex
+performs those steps autonomously and verifies the resulting repository and CI
+state. A separate per-commit or per-push confirmation is no longer required.
+
+Codex must inspect the exact diff, preserve `Luan Taraschi` as the configured
+author and committer, and add no Codex attribution or generated co-author.
+History rewrites, force pushes, destructive repository actions, package
+publication, visibility changes, new remotes, and announcements remain distinct
+actions that require specific authorization when applicable.

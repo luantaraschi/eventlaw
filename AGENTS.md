@@ -9,10 +9,12 @@ Read these files completely before making changes:
 
 Project constraints:
 
-- Do not stage, commit, amend, push, or create a PR by default. Codex may perform
-  those actions only when Luan explicitly authorizes them for the current scope.
-  Inspect the exact diff first, preserve the configured `Luan Taraschi` Git
-  identity, and never add Codex attribution or a generated co-author.
+- Codex owns routine command execution, staging, commits, pushes, and PR creation
+  when they are normal steps within work requested by Luan; do not hand terminal
+  work back to him or wait for a separate Git authorization. Inspect the exact
+  diff first, preserve the configured `Luan Taraschi` Git identity, and never add
+  Codex attribution or a generated co-author. Rewriting history, force-pushing,
+  and other destructive Git operations still require specific approval.
 - The package stays `private: true` until the user explicitly approves publication.
 - The main `eventlaw` entry has no runtime dependencies.
 - `fast-check` remains optional and isolated at `eventlaw/fast-check`.
