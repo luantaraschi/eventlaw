@@ -83,6 +83,9 @@ maintainer dogfood and external API review remain open.
 - Seven seed issues exist in the public GitHub repository: three documentation
   `good first issue` tasks, two design proposals, one performance investigation,
   and one external OTLP validation task.
+- Discussion #11 is the community welcome announcement. It introduces the beta,
+  links the package and Trace Lab, routes bugs, questions, ideas, and showcases,
+  and asks for minimal event traces instead of generic feature requests.
 - GitHub dependency alerts, automated security fixes, secret scanning, push
   protection, private vulnerability reporting, and CodeQL are enabled. Ruleset
   `Protect main after public beta` protects `main` after the release handoff.
@@ -342,3 +345,13 @@ Browser QA covers 320/598/768/1024/1253/1440 px with no horizontal overflow,
 zero console errors, and zero axe-core violations in light and dark modes. Luan
 then authorized committing the complete correction and pushing it directly to
 `origin/main`, with his Git identity retained as author and committer.
+
+### 2026-08-20 — Community welcome discussion
+
+The first GitHub Discussion was published in `Announcements` as
+[`Welcome to eventlaw — start here`](https://github.com/luantaraschi/eventlaw/discussions/11).
+It states the public-beta boundary, shows the beta install command, links the
+README, Trace Lab, stability contract, issue tracker, contribution starter tasks,
+and Code of Conduct, and directs open-ended participation into the appropriate
+Discussion categories. The request for feedback is evidence-oriented: a plain-
+language rule, minimal timestamped trace, expected result, and observed gap.
