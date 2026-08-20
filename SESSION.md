@@ -73,6 +73,8 @@ maintainer dogfood and external API review remain open.
   published integrity and SHA-1 values exactly match the reviewed tarball.
 - npm trusted publishing connects `eventlaw` to `luantaraschi/eventlaw`,
   `release.yml`, and the GitHub `npm` environment with publish-only permission.
+- Package publishing access requires MFA; traditional tokens cannot bypass the
+  interactive policy, while the scoped OIDC trusted publisher remains allowed.
 - Tag `v0.1.0-beta.1` points to release-preparation commit `c83cb75`; the release
   workflow skipped duplicate npm publication and created a GitHub pre-release.
 - Release readiness is now prepared locally: clean-consumer ESM, CommonJS, type,
