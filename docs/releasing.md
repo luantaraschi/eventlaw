@@ -49,6 +49,11 @@ The first interactive version does not receive OIDC provenance. Trusted
 publishing generates provenance automatically for later releases when both the
 repository and package are public.
 
+The npm registry requires every package to expose a `latest` tag. Because the
+first publication has only one version, both `latest` and `beta` initially point
+to `0.1.0-beta.1`; documentation and future prerelease workflows explicitly use
+`beta`. A stable release will become the intentional `latest` target.
+
 ## Later releases
 
 1. Update the version and changelog in a focused maintainer commit.
@@ -59,8 +64,9 @@ repository and package are public.
 6. Verify the npm version, provenance, GitHub release, and installation command.
 
 The workflow rejects a tag that does not exactly match `package.json`. It runs
-the full release gate, publishes with OIDC, and creates release notes after npm
-succeeds.
+the full release gate, publishes prerelease versions under `beta` with OIDC, and
+creates a GitHub pre-release. Stable versions publish under `latest` and create a
+normal GitHub release.
 
 ## Recovery
 

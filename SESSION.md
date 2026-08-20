@@ -10,14 +10,13 @@ small, readable counterexample.
 
 ## Current phase
 
-Vertical slices 1 through 4 are complete. The first public beta is authorized
-for npm publication while maintainer dogfood and external API review remain open.
+Vertical slices 1 through 4 are complete. The first public beta is live on npm;
+maintainer dogfood and external API review remain open.
 
 ## Current status
 
-- Name checked and provisionally changed from `tracecheck` to `eventlaw`.
-- Package version `0.1.0-beta.1` is prepared for its explicitly authorized first
-  npm publication; the `private` guard has been removed.
+- The package name is `eventlaw`; `0.1.0-beta.1` is published on npm under the
+  `beta` channel and the repository no longer carries a `private` guard.
 - Local Git repository initialized on `main`; public remote available at
   `https://github.com/luantaraschi/eventlaw` and linked as `origin`.
 - Initial commit `0882d88` and the five later milestones through the
@@ -70,6 +69,12 @@ for npm publication while maintainer dogfood and external API review remain open
 - The release package contains 36 allowlisted files, 110,899 bytes compressed,
   and 407,087 bytes unpacked. Its dry-run file list contains no credentials,
   fixtures, tests, source files, or internal continuity documents.
+- Registry installation passes for ESM, CommonJS, and every public subpath. The
+  published integrity and SHA-1 values exactly match the reviewed tarball.
+- npm trusted publishing connects `eventlaw` to `luantaraschi/eventlaw`,
+  `release.yml`, and the GitHub `npm` environment with publish-only permission.
+- Tag `v0.1.0-beta.1` points to release-preparation commit `c83cb75`; the release
+  workflow skipped duplicate npm publication and created a GitHub pre-release.
 - Release readiness is now prepared locally: clean-consumer ESM, CommonJS, type,
   and subpath smoke tests; tag-driven npm OIDC workflow; public stability and
   release policies; Dependabot; and a public-only CodeQL workflow.
@@ -115,8 +120,8 @@ for npm publication while maintainer dogfood and external API review remain open
    the deterministic two-service harness is complete.
 7. Ask whether truncating nanoseconds, nesting semantic attribute keys, and
    matching on trace IDs fit how an operator would write laws.
-8. Complete first-publication verification, interactive npm publication, trusted
-   publisher configuration, and release tagging from `docs/releasing.md`.
+8. Run future releases through the tag-driven OIDC workflow documented in
+   `docs/releasing.md`; do not create long-lived npm publishing tokens.
 
 ## Known limitations
 

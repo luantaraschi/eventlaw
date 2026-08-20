@@ -6,6 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/luantaraschi/eventlaw/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/luantaraschi/eventlaw/actions/workflows/ci.yml/badge.svg"></a>
+  <a href="https://www.npmjs.com/package/eventlaw"><img alt="npm beta" src="https://img.shields.io/npm/v/eventlaw?tag=beta&color=5847e8"></a>
   <a href="./package.json"><img alt="Node.js 22 or newer" src="https://img.shields.io/badge/node-%3E%3D22-5847e8"></a>
   <a href="./package.json"><img alt="Zero runtime dependencies" src="https://img.shields.io/badge/runtime_dependencies-none-5847e8"></a>
   <a href="./LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-5847e8"></a>
