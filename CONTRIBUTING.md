@@ -104,9 +104,8 @@ not real timers.
 
 ## Releasing
 
-Maintainer only. The package remains blocked while the API is a research
-preview. The automated workflow, trusted-publishing contract, first-publication
-exception, tag convention, and rollback guidance live in
+Maintainer only. The automated workflow, trusted-publishing contract, tag
+convention, and rollback guidance live in
 [docs/releasing.md](docs/releasing.md).
 
 Contributors should not change package versions or create release tags in pull

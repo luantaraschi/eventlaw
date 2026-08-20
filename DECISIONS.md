@@ -486,7 +486,7 @@ commit.
 
 ## D-034 — Maintainer dogfood precedes external validation
 
-**Status:** accepted, 2026-08-20.
+**Status:** superseded by D-037, 2026-08-20.
 
 Luan chose to install the prepared beta candidate in his own projects before
 running the two TypeScript comprehension sessions and webhook-operator session.
@@ -532,3 +532,18 @@ author and committer, and add no Codex attribution or generated co-author.
 History rewrites, force pushes, destructive repository actions, package
 publication, visibility changes, new remotes, and announcements remain distinct
 actions that require specific authorization when applicable.
+
+## D-037 — Publish the first beta before validation gates close
+
+**Status:** accepted, 2026-08-20.
+
+Luan made the repository public and explicitly authorized publishing
+`eventlaw@0.1.0-beta.1` after verifying his npm email and enabling account 2FA.
+This approval supersedes the earlier sequence that blocked publication on
+maintainer dogfood and three external sessions.
+
+Publication changes availability, not evidence. The dogfood, TypeScript
+comprehension, webhook-operator, and external OTLP checks remain open and must be
+shown as such in the README and roadmap. The root and `fast-check` entry points
+are beta; JSONL and OpenTelemetry remain experimental. No stable-adoption claim
+is created by the public repository or npm package.

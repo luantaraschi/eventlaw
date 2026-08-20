@@ -1,7 +1,7 @@
 # Public contract and stability
 
-This document defines what the first public beta intends to support. It does not
-turn the current unpublished research preview into a release.
+This document defines what the public beta supports and which entry points remain
+experimental while real-world validation continues.
 
 ## Compatibility
 

@@ -52,13 +52,15 @@ jobs:
             echo "published=false" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Mark the tagged package publishable
-        if: steps.registry.outputs.published == 'false'
-        run: npm pkg delete private
-
       - name: Publish to npm with provenance
         if: steps.registry.outputs.published == 'false'
-        run: npm publish
+        run: |
+          VERSION=$(node --print "require('./package.json').version")
+          if [[ "$VERSION" == *-* ]]; then
+            npm publish --tag beta
+          else
+            npm publish
+          fi
 
       - name: Create GitHub release
         env:

@@ -10,16 +10,15 @@ small, readable counterexample.
 
 ## Current phase
 
-Vertical slices 1 through 4 are complete. The prepared beta is now entering
-maintainer dogfood in owned projects before external API review.
+Vertical slices 1 through 4 are complete. The first public beta is authorized
+for npm publication while maintainer dogfood and external API review remain open.
 
 ## Current status
 
 - Name checked and provisionally changed from `tracecheck` to `eventlaw`.
-- Package is intentionally private and unpublished.
-- The prepared package version is `0.1.0-beta.1`; `private: true` remains the
-  publication guard until Luan explicitly removes it.
-- Local Git repository initialized on `main`; private remote created at
+- Package version `0.1.0-beta.1` is prepared for its explicitly authorized first
+  npm publication; the `private` guard has been removed.
+- Local Git repository initialized on `main`; public remote available at
   `https://github.com/luantaraschi/eventlaw` and linked as `origin`.
 - Initial commit `0882d88` and the five later milestones through the
   multi-resource Collector validation are on `origin/main`. Luan explicitly
@@ -68,17 +67,18 @@ maintainer dogfood in owned projects before external API review.
   atomicity, replay, restart, and failure requirements come from an operator.
 - Node.js 22 is now the minimum; CI is prepared for Node 22/24 with official v7
   GitHub Actions.
-- Package dry-run: 36 files, 110.9 kB compressed, 406.9 kB unpacked. Package
-  remains private.
+- The release package contains 36 allowlisted files, 110,899 bytes compressed,
+  and 407,087 bytes unpacked. Its dry-run file list contains no credentials,
+  fixtures, tests, source files, or internal continuity documents.
 - Release readiness is now prepared locally: clean-consumer ESM, CommonJS, type,
   and subpath smoke tests; tag-driven npm OIDC workflow; public stability and
   release policies; Dependabot; and a public-only CodeQL workflow.
-- Seven seed issues exist in the private GitHub repository: three documentation
+- Seven seed issues exist in the public GitHub repository: three documentation
   `good first issue` tasks, two design proposals, one performance investigation,
   and one external OTLP validation task.
 - GitHub dependency alerts and automated security fixes are enabled. Ruleset
-  `Protect main after public beta` exists but is disabled so it cannot affect the
-  current private workflow.
+  `Protect main after public beta` exists but remains disabled during the first
+  release preparation.
 - Release verification passes: 69 tests, strict types, ESM/CJS/declarations,
   formatting, zero audit findings, actionlint 1.7.12, and clean-consumer package
   imports. The complete gate was rerun on 2026-08-20 after the dogfood plan and
@@ -115,8 +115,8 @@ maintainer dogfood in owned projects before external API review.
    the deterministic two-service harness is complete.
 7. Ask whether truncating nanoseconds, nesting semantic attribute keys, and
    matching on trace IDs fit how an operator would write laws.
-8. Only after the three human sessions, decide whether to make the repository
-   public and perform the first interactive npm publication in `docs/releasing.md`.
+8. Complete first-publication verification, interactive npm publication, trusted
+   publisher configuration, and release tagging from `docs/releasing.md`.
 
 ## Known limitations
 

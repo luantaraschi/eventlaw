@@ -1,19 +1,23 @@
 # Release process
 
-Releases are maintainer-only. The repository deliberately keeps `private: true`
-until Luan approves the first npm publication.
+Releases are maintainer-only. Luan explicitly approved the first npm publication
+on 2026-08-20; later releases follow the tag-driven trusted-publishing path.
 
-## Gates for `0.1.0-beta.1`
+## Evidence status for `0.1.0-beta.1`
 
-- Complete and record the maintainer dogfood protocol in at least two owned
-  projects.
-- Complete and record the two TypeScript comprehension sessions.
-- Complete and record the webhook-operator session.
-- Resolve repeated misunderstandings according to `validation.md`.
-- Make the GitHub repository public.
-- Run `npm run release:check` from a clean checkout.
-- Review `npm pack --dry-run` for secrets and unintended files.
-- Confirm the package version and changelog agree.
+- [ ] Complete and record the maintainer dogfood protocol in at least two owned
+      projects.
+- [ ] Complete and record the two TypeScript comprehension sessions.
+- [ ] Complete and record the webhook-operator session.
+- [ ] Resolve repeated misunderstandings according to `validation.md`.
+- [x] Make the GitHub repository public.
+- [x] Receive explicit authorization for the first beta publication.
+- [x] Run `npm run release:check` from a clean checkout.
+- [x] Review `npm pack --dry-run` for secrets and unintended files.
+- [x] Confirm the package version and changelog agree.
+
+Luan chose to publish the beta before the first four evidence items close. They
+remain post-release beta-validation work and must not be presented as completed.
 
 ## Why the first publish is different
 
@@ -25,8 +29,9 @@ long-lived npm token.
 
 ## First npm publication
 
-1. Enable two-factor authentication on Luan's npm account and run `npm login`.
-2. Remove `private: true` only after explicitly approving publication.
+1. Verify Luan's npm email, enable account 2FA, and authenticate the release
+   machine.
+2. Remove `private: true` after explicit publication approval.
 3. Run `npm run release:check` and `npm pack --dry-run` again.
 4. Publish the prerelease with `npm publish --tag beta`.
 5. On npm, configure GitHub Actions as the trusted publisher for:
@@ -54,8 +59,8 @@ repository and package are public.
 6. Verify the npm version, provenance, GitHub release, and installation command.
 
 The workflow rejects a tag that does not exactly match `package.json`. It runs
-the full release gate, removes the private guard only inside the release runner,
-publishes with OIDC, and creates release notes after npm succeeds.
+the full release gate, publishes with OIDC, and creates release notes after npm
+succeeds.
 
 ## Recovery
 

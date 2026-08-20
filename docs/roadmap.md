@@ -4,6 +4,10 @@ The core feature set is intentionally narrow enough to validate. Kafka,
 persistent stores, extra temporal operators, and framework adapters are not
 release blockers.
 
+`0.1.0-beta.1` opens the package for public experimentation before the dogfood
+and human-validation items below are complete. Unchecked items remain evidence
+gaps, not implied successes.
+
 ## Maintainer dogfood
 
 - [ ] Install the packed candidate into `lull` as a normal consumer dependency.

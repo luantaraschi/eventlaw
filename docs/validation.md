@@ -82,5 +82,6 @@ Copy this block below the dated work log for each anonymized session:
   trace, and an explainable online retention policy.
 - Do not choose a vendor SDK from hypothetical demand. Require either one
   operator session or two law proposals from that ecosystem.
-- Keep the repository private until the two comprehension sessions and one
-  webhook session have been recorded.
+- Keep the public-beta status explicit until the two comprehension sessions and
+  one webhook session have been recorded; repository visibility is not evidence
+  that these checks passed.

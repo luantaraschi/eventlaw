@@ -9,7 +9,7 @@
   <a href="./package.json"><img alt="Node.js 22 or newer" src="https://img.shields.io/badge/node-%3E%3D22-5847e8"></a>
   <a href="./package.json"><img alt="Zero runtime dependencies" src="https://img.shields.io/badge/runtime_dependencies-none-5847e8"></a>
   <a href="./LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-5847e8"></a>
-  <a href="#project-status"><img alt="Research preview" src="https://img.shields.io/badge/status-research_preview-e79519"></a>
+  <a href="#project-status"><img alt="Public beta" src="https://img.shields.io/badge/status-public_beta-e79519"></a>
 </p>
 
 <p align="center">
@@ -24,20 +24,17 @@
 Write a behavior law once. Falsify it with generated inputs, verify recorded
 traces, and monitor live events with the same serializable definition.
 
-> `eventlaw` is a research preview. The repository is ready for design partners
-> and experiments, but the package is not published yet.
+> `eventlaw` is a public beta for design partners and experiments. Its core is
+> tested; maintainer dogfood and independent API validation remain in progress.
 
 ## Installation
 
-The first public candidate is `0.1.0-beta.1`, but it is intentionally blocked
-from npm while it is tested in maintainer-owned projects and then reviewed
-externally. After publication, the beta channel will install with:
+Install the current public beta with:
 
 ```bash
 npm install eventlaw@beta
 ```
 
-Until then, clone the repository and use the commands under [Try it locally](#try-it-locally).
 The supported runtimes and stability of each entry point are documented in the
 [public contract](docs/stability.md).
 
@@ -337,7 +334,7 @@ express, open an issue with the smallest event sequence that should pass or fail
 and write the rule once in plain language.
 
 The [external validation protocol](docs/validation.md) defines the comprehension
-and webhook-operator sessions required before publication.
+and webhook-operator sessions that remain open during the public beta.
 The [maintainer dogfood protocol](docs/dogfood.md) defines what to test first in
 owned projects and how to record evidence without turning assumptions into facts.
 

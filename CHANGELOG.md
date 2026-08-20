@@ -8,6 +8,8 @@ the package leaves research preview.
 
 ## [Unreleased]
 
+## [0.1.0-beta.1] - 2026-08-20
+
 ### Added
 
 - Release-candidate metadata for `0.1.0-beta.1`, an installed-package smoke test,
@@ -43,7 +45,8 @@ the package leaves research preview.
 
 ### Known limitations
 
-- The package is private and unpublished while the API is validated externally.
+- Maintainer dogfood and independent API validation remain open after the beta
+  publication; JSONL and OpenTelemetry entry points are experimental.
 - Lifetime uniqueness is intentionally unbounded without an explicit retention law.
 - Consequence matching still examines pending obligations in the event's
   partition when captures differ.
